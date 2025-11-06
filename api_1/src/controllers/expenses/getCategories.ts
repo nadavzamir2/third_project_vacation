@@ -1,4 +1,4 @@
-import getConnection from "../../db";
+import {getConnection} from "../../db";
 
 export default async function getCategories() {
     const conn = await getConnection();

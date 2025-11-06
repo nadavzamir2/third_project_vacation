@@ -1,7 +1,7 @@
 import mysql2 from "mysql2/promise";
 let retriesConnections = 5;
 let numberOfRetry = 0;
-async function getConnection() {
+export async function getConnection(): Promise<mysql2.Pool | undefined> {
     try {
         const connections = await mysql2.createPool({
             host: process.env.DB_HOST,
@@ -18,13 +18,10 @@ async function getConnection() {
     } catch (error) {
         await new Promise(resolve => setTimeout(resolve, 10_000));
         if (numberOfRetry !== retriesConnections) {
-            console.log("+++++++++++++++++++++++++++++++++")
-            console.log("+++++++++++++++++++++++++++++++++")
             numberOfRetry++;
+            console.log(`🔄 Retrying MySQL connection... (${numberOfRetry}/${retriesConnections})`);
             getConnection()
         } else {
-            console.log("==================")
-            console.log("==================")
             process.exit(1)
         }
         console.log(error)

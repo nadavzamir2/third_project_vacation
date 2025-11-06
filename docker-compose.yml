@@ -6,7 +6,7 @@ services:
     container_name: mysql-db
     restart: always
     environment:
-     MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:
@@ -18,13 +18,15 @@ services:
     restart: always
     ports:
       - "3001:3001"
-    
+
   api:
     build: ./api_1
     container_name: node-api
     restart: always
     volumes:
       - ./logs:/app/logs
+      - ./api_1/src:/app/src # Mount source for hot-reload
+      - ./api_1/dist:/app/dist # Mount dist for compiled output
     ports:
       - "3000:3000"
     environment:
@@ -36,5 +38,7 @@ services:
       DB_HOST: mysql
       DB_USER: root
       DB_PASSWORD: apppass
+      NODE_ENV: development
+    command: npm run all # Use hot-reload in development
     depends_on:
       - mysql

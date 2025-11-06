@@ -1,5 +1,5 @@
 import { QueryResult } from "mysql2";
-import getConnection from "../../db";
+import {getConnection} from "../../db";
 export async function getUserDetails(userId: number) {
     const queryResult = await (await getConnection())?.execute(getQuery(), [userId])
     //@ts-ignore
