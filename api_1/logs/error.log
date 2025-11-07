@@ -35,3 +35,6 @@
 {"level":"error","message":"Token not provided!","timestamp":"2025-11-06 21:38:16"}
 {"level":"error","message":"UNAUTH reqeustId: 53a89079-00aa-4c7f-ac1b-4ddc2ede32eb","timestamp":"2025-11-06 21:38:16"}
 {"level":"error","message":"Api is running on port 3000!!!","timestamp":"2025-11-06 23:08:19"}
+{"level":"error","message":"Api is running on port 3000!!!","timestamp":"2025-11-07 02:32:45"}
+{"level":"error","message":"Api is running on port 3000!!!","timestamp":"2025-11-07 12:29:40"}
+{"level":"error","message":"Api is running on port 3000!!!","timestamp":"2025-11-07 12:42:38"}

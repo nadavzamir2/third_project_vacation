@@ -20,12 +20,15 @@ const postVacationEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, fun
     if (!startDate) {
         return res.status(400).send("startDate is required");
     }
+    if (!(0, dates_1.isDateDDMMYYYY)(startDate)) {
+        return res.status(400).send("Invalid startDate. Expected format: dd-mm-yyyy");
+    }
     const endDate = body.endDate;
     if (!endDate) {
         return res.status(400).send("endDate is required");
     }
-    if (!(0, dates_1.isDate)(endDate)) {
-        return res.status(400).send("Invalid endDate");
+    if (!(0, dates_1.isDateDDMMYYYY)(endDate)) {
+        return res.status(400).send("Invalid endDate. Expected format: dd-mm-yyyy");
     }
     const price = body.price;
     if (!price) {
@@ -37,7 +40,10 @@ const postVacationEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, fun
     if (price <= 0) {
         return res.status(400).send("Price must be greater than zero");
     }
-    if (new Date(endDate) <= new Date(startDate)) {
+    // Convert dates for comparison
+    const startDateMySQL = (0, dates_1.convertDDMMYYYYtoYYYYMMDD)(startDate);
+    const endDateMySQL = (0, dates_1.convertDDMMYYYYtoYYYYMMDD)(endDate);
+    if (new Date(endDateMySQL) <= new Date(startDateMySQL)) {
         return res.status(400).send("endDate must be after startDate");
     }
     if (price >= 10000) {
@@ -78,8 +84,8 @@ const postVacationEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, fun
     const newVacation = yield (0, createVacation_1.createVacation)({
         destination: destination,
         description: description || "",
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate: new Date(startDateMySQL),
+        endDate: new Date(endDateMySQL),
         price: price,
         image: image
     });

@@ -8,6 +8,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const logger_1 = __importDefault(require("./logger"));
 const post_vacation_1 = require("./endpoints/post.vacation");
 const get_vacation_1 = require("./endpoints/get.vacation");
+const delete_vacation_1 = require("./endpoints/delete.vacation");
+const put_vacation_1 = require("./endpoints/put.vacation");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +19,8 @@ app.get("/hello", (req, res, next) => {
 });
 app.get("/vacation", get_vacation_1.getVacationEndpoint);
 app.post("/vacation", post_vacation_1.postVacationEndpoint);
+app.delete("/vacation", delete_vacation_1.deleteVacationEndpoint);
+app.put("/vacation", put_vacation_1.putVacationEndpoint);
 app.listen(PORT, (err) => {
     if (err) {
         console.log(`\x1b[31m${err.message}\x1b[0m`);

@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { isFloat, getNumOfDecimals } from "./../utils/numbers";
-import { isDate } from "../utils/dates";
+import { isDateDDMMYYYY, convertDDMMYYYYtoYYYYMMDD } from "../utils/dates";
 import { createVacation } from "../db/createVacation";
 
 export const postVacationEndpoint = async (req: Request, res: Response) => {
@@ -10,13 +10,16 @@ export const postVacationEndpoint = async (req: Request, res: Response) => {
     if (!startDate) {
         return res.status(400).send("startDate is required");
     }
+    if (!isDateDDMMYYYY(startDate)) {
+        return res.status(400).send("Invalid startDate. Expected format: dd-mm-yyyy");
+    }
 
     const endDate = body.endDate;
     if (!endDate) {
         return res.status(400).send("endDate is required");
     }
-    if (!isDate(endDate)) {
-        return res.status(400).send("Invalid endDate");
+    if (!isDateDDMMYYYY(endDate)) {
+        return res.status(400).send("Invalid endDate. Expected format: dd-mm-yyyy");
     }
     const price = body.price;
     if (!price) {
@@ -28,7 +31,12 @@ export const postVacationEndpoint = async (req: Request, res: Response) => {
     if (price <= 0) {
         return res.status(400).send("Price must be greater than zero");
     }
-    if (new Date(endDate) <= new Date(startDate)) {
+
+    // Convert dates for comparison
+    const startDateMySQL = convertDDMMYYYYtoYYYYMMDD(startDate);
+    const endDateMySQL = convertDDMMYYYYtoYYYYMMDD(endDate);
+
+    if (new Date(endDateMySQL) <= new Date(startDateMySQL)) {
         return res.status(400).send("endDate must be after startDate");
     }
     if (price >= 10000) {
@@ -70,8 +78,8 @@ export const postVacationEndpoint = async (req: Request, res: Response) => {
     const newVacation = await createVacation({
         destination: destination,
         description: description || "",
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate: new Date(startDateMySQL),
+        endDate: new Date(endDateMySQL),
         price: price,
         image: image
     });

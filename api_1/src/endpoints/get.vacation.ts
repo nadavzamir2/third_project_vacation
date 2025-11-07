@@ -15,4 +15,5 @@ export const getVacationEndpoint = async (req: Request, res: Response, next: Nex
         return res.status(404).send("Vacation not found");
     }
     res.status(200).send({ vacation });
+        
 }

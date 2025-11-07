@@ -5,6 +5,8 @@ import logger from "./logger";
 import en from "zod/v4/locales/en.cjs";
 import { postVacationEndpoint } from "./endpoints/post.vacation";
 import { getVacationEndpoint } from "./endpoints/get.vacation";
+import { deleteVacationEndpoint } from "./endpoints/delete.vacation";
+import { putVacationEndpoint } from "./endpoints/put.vacation";
 
 dotenv.config();
 const app = express();
@@ -18,6 +20,8 @@ app.get("/hello", (req, res, next) => {
 });
 app.get("/vacation", getVacationEndpoint);
 app.post("/vacation", postVacationEndpoint);
+app.delete("/vacation", deleteVacationEndpoint);
+app.put("/vacation", putVacationEndpoint);
 app.listen(PORT, (err) => {
     if (err) {
         console.log(`\x1b[31m${err.message}\x1b[0m`);
