@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.updateVacation = exports.getVacation = exports.deleteVacation = exports.createVacation = exports.addFollower = void 0;
 exports.getConnection = getConnection;
 const promise_1 = __importDefault(require("mysql2/promise"));
 let retriesConnections = 5;
@@ -46,4 +47,14 @@ function getConnection() {
         }
     });
 }
+var addFollower_1 = require("./addFollower");
+Object.defineProperty(exports, "addFollower", { enumerable: true, get: function () { return addFollower_1.addFollower; } });
+var createVacation_1 = require("./createVacation");
+Object.defineProperty(exports, "createVacation", { enumerable: true, get: function () { return createVacation_1.createVacation; } });
+var deleteVacation_1 = require("./deleteVacation");
+Object.defineProperty(exports, "deleteVacation", { enumerable: true, get: function () { return deleteVacation_1.deleteVacation; } });
+var getVacation_1 = require("./getVacation");
+Object.defineProperty(exports, "getVacation", { enumerable: true, get: function () { return getVacation_1.getVacation; } });
+var updateVacation_1 = require("./updateVacation");
+Object.defineProperty(exports, "updateVacation", { enumerable: true, get: function () { return updateVacation_1.updateVacation; } });
 exports.default = getConnection;

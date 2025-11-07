@@ -28,4 +28,10 @@ export async function getConnection(): Promise<mysql2.Pool | undefined> {
     }
 }
 
+export { addFollower } from "./addFollower";
+export { createVacation } from "./createVacation";
+export { deleteVacation } from "./deleteVacation";
+export { getVacation } from "./getVacation";
+export { updateVacation } from "./updateVacation";
+
 export default getConnection;

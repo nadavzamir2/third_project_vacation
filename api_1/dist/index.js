@@ -10,6 +10,10 @@ const post_vacation_1 = require("./endpoints/post.vacation");
 const get_vacation_1 = require("./endpoints/get.vacation");
 const delete_vacation_1 = require("./endpoints/delete.vacation");
 const put_vacation_1 = require("./endpoints/put.vacation");
+const post_follow_1 = require("./endpoints/post.follow");
+const post_unfollow_1 = require("./endpoints/post.unfollow");
+// import { deleteFollowerEndpoint } from "./endpoints/delete.follower";
+// import { getFollowedVacationsEndpoint } from "./endpoints/get.followed.vacations";
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +25,9 @@ app.get("/vacation", get_vacation_1.getVacationEndpoint);
 app.post("/vacation", post_vacation_1.postVacationEndpoint);
 app.delete("/vacation", delete_vacation_1.deleteVacationEndpoint);
 app.put("/vacation", put_vacation_1.putVacationEndpoint);
+app.post("/vacation/follow", post_follow_1.postFollowEndpoint);
+app.post("/vacation/unfollow", post_unfollow_1.unFollowEndpoint);
+// app.get("/vacation/followed", getFollowedVacationsEndpoint);
 app.listen(PORT, (err) => {
     if (err) {
         console.log(`\x1b[31m${err.message}\x1b[0m`);

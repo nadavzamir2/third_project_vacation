@@ -12,19 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const axios_1 = __importDefault(require("axios"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const router = express_1.default.Router();
-const url = "https://data.gov.il/api/3/action/datastore_search?resource_id=8efa5992-db41-40ba-ab86-05dad100e593&q=jones";
-router.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield axios_1.default.get(url);
-        return res.json({ message: result.data });
-    }
-    catch (error) {
-        return next(new Error(error.message));
-    }
-}));
-exports.default = router;
+exports.isFollow = void 0;
+const _1 = __importDefault(require("."));
+const isFollow = (email, vacationId) => __awaiter(void 0, void 0, void 0, function* () {
+    const connection = yield (0, _1.default)();
+    const [rows] = yield connection.execute("SELECT * FROM northwind.followers WHERE user_email = ? AND vacation_id = ?", [email, vacationId]);
+    return rows.length > 0;
+});
+exports.isFollow = isFollow;
