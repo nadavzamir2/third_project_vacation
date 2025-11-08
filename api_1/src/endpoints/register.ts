@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { hasOnlyEnglishLetters, isOnlyEnglishLetters } from "../utils/latinLetters";
 import { registerUser } from "../db/registerUser";
+import { getConnection } from "../db";
+import { email } from "zod";
 
 export const registerEndpoint = async (req: Request, res: Response) => {
     const body = req.body;
@@ -40,11 +42,14 @@ export const registerEndpoint = async (req: Request, res: Response) => {
     if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
         return res.status(400).send("Invalid email format");
     }
-    if (password.length < 0) {
+    if (await !uniqueEmail(email)) {
+        return res.status(400).send("Email already exists");
+    }
+    if (password.length < 5) {
         return res.status(400).send("Password too short(minimum 5 letters)");
     }
-    if (password.length >20) {
-        return res.status(400).send("Password too long (maximum 20 letters");
+    if (password.length > 20) {
+        return res.status(400).send("Password too long (maximum 20 letters)");
     }
     if (!isOnlyEnglishLetters(password)) {
         return res.status(400).send("Forign letters are not allowed in password");
@@ -63,3 +68,14 @@ export const registerEndpoint = async (req: Request, res: Response) => {
         }
     }
 }
+export const uniqueEmail = async (email: string) => {
+    const connection = await getConnection();
+    const [result]: any = await connection!.execute(checkEmailQuery(), [email]);
+    return result.length === 0;
+}
+
+const checkEmailQuery = () => {
+    const query = `SELECT * FROM northwind.users WHERE email = ?`;
+    return query;
+}
+ 

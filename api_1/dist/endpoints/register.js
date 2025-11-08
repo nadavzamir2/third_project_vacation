@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerEndpoint = void 0;
+exports.uniqueEmail = exports.registerEndpoint = void 0;
 const latinLetters_1 = require("../utils/latinLetters");
 const registerUser_1 = require("../db/registerUser");
+const db_1 = require("../db");
 const registerEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const firstName = body.firstName;
@@ -48,11 +49,14 @@ const registerEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, functio
     if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
         return res.status(400).send("Invalid email format");
     }
-    if (password.length < 0) {
+    if (yield !(0, exports.uniqueEmail)(email)) {
+        return res.status(400).send("Email already exists");
+    }
+    if (password.length < 5) {
         return res.status(400).send("Password too short(minimum 5 letters)");
     }
     if (password.length > 20) {
-        return res.status(400).send("Password too long (maximum 20 letters");
+        return res.status(400).send("Password too long (maximum 20 letters)");
     }
     if (!(0, latinLetters_1.isOnlyEnglishLetters)(password)) {
         return res.status(400).send("Forign letters are not allowed in password");
@@ -73,3 +77,13 @@ const registerEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.registerEndpoint = registerEndpoint;
+const uniqueEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    const connection = yield (0, db_1.getConnection)();
+    const [result] = yield connection.execute(checkEmailQuery(), [email]);
+    return result.length === 0;
+});
+exports.uniqueEmail = uniqueEmail;
+const checkEmailQuery = () => {
+    const query = `SELECT * FROM northwind.users WHERE email = ?`;
+    return query;
+};
