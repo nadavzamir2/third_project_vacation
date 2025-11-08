@@ -3,10 +3,10 @@ import {getConnection} from "./";
 import { FilterDate } from "../types";
 
 
-export const queryVacations = async (limit: number, pageNumber: number, onlyFollowed: boolean, filterDate: FilterDate) => {
+export const queryVacations = async (limit: number, pageNumber: number, onlyFollowed: boolean, filterDate: FilterDate, email: string) => {
     const connection =  await getConnection();
-    const offest = String(limit * pageNumber);
-    const [result]: any = await connection?.execute(getQuerySql(filterDate, offest), [String(limit)]);
+    const offset = String(limit * pageNumber);
+    const [result]: any = await connection?.execute(getQuerySql(filterDate, onlyFollowed, offset), [String(limit), email]);
     return result;
 }
 
@@ -22,9 +22,17 @@ const getFilterDateCondition = (filterDate: FilterDate) => {
     }
 }
 
-const getQuerySql = (filterDate: FilterDate, offest: string) => {
+const getFollowedCondition = (onlyFollowed: boolean) => {
+    if (onlyFollowed) {
+        return `JOIN northwind.followers as f ON v.id = f.vacation_id AND f.user_email = ?`;
+    } else {
+        return '';
+    }
+}
+
+const getQuerySql = (filterDate: FilterDate, onlyFollowed: boolean, offset: string) => {
     return `SELECT v.id, v.destination, v.description, v.start_date, v.end_date, v.image FROM northwind.vacations as v
-    WHERE ${getFilterDateCondition(filterDate)}
+    WHERE ${getFilterDateCondition(filterDate)} ${getFollowedCondition(onlyFollowed)}
     LIMIT ?
-    OFFSET ${offest}`;
+    OFFSET ${offset}`;
 }
