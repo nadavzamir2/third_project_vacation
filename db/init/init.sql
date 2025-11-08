@@ -92,25 +92,3 @@ INSERT INTO `northwind`.`followers` (`user_email`, `vacation_id`) VALUES
 ('tom.harris@email.com', 1),
 ('tom.harris@email.com', 3),
 ('tom.harris@email.com', 5);
-
-
--- SELECT 
---     *
--- FROM
---     (SELECT 
---         ship_name, COUNT(*) AS number_of_orders
---     FROM
---         northwind.orders
---     GROUP BY ship_name) AS a1
--- WHERE
---     a1.number_of_orders = ((SELECT 
---             MIN(number_of_orders) AS maxNum
---         FROM
---             (SELECT 
---                 ship_name, COUNT(*) AS number_of_orders
---             FROM
---                 northwind.orders
---             GROUP BY ship_name) AS a))
-
---  User_1 Gal, Amouyal, galamouyal88@gmail.com Admin
---  User_2 Tomer, D, tdth@gmail.com User

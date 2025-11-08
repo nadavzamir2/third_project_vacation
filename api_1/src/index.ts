@@ -10,6 +10,7 @@ import { putVacationEndpoint } from "./endpoints/put.vacation";
 import { postFollowEndpoint } from "./endpoints/post.follow";
 import { unFollowEndpoint } from "./endpoints/post.unfollow";
 import { postQueryVacationsEndpoint } from "./endpoints/post.vacations";
+import { registerEndpoint } from "./endpoints/register";
 // import { deleteFollowerEndpoint } from "./endpoints/delete.follower";
 // import { getFollowedVacationsEndpoint } from "./endpoints/get.followed.vacations";
 
@@ -30,6 +31,7 @@ app.put("/vacation", putVacationEndpoint);
 app.post("/vacation/follow", postFollowEndpoint);
 app.post("/vacation/unfollow", unFollowEndpoint);
 app.post("/vacations", postQueryVacationsEndpoint);
+app.post("/user/post", registerEndpoint)
 // app.get("/vacation/followed", getFollowedVacationsEndpoint);
 app.listen(PORT, (err) => {
     if (err) {
