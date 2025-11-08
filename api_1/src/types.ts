@@ -7,3 +7,10 @@ export type Vacation = {
     price: number;
     image: string;
 }
+
+export const enum FilterDate {
+    All = "ALL",
+    Past = "PAST",
+    Upcoming = "UPCOMING",
+    Active = "ACTIVE"
+}

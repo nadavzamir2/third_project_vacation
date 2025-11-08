@@ -12,6 +12,7 @@ const delete_vacation_1 = require("./endpoints/delete.vacation");
 const put_vacation_1 = require("./endpoints/put.vacation");
 const post_follow_1 = require("./endpoints/post.follow");
 const post_unfollow_1 = require("./endpoints/post.unfollow");
+const post_vacations_1 = require("./endpoints/post.vacations");
 // import { deleteFollowerEndpoint } from "./endpoints/delete.follower";
 // import { getFollowedVacationsEndpoint } from "./endpoints/get.followed.vacations";
 dotenv_1.default.config();
@@ -27,6 +28,7 @@ app.delete("/vacation", delete_vacation_1.deleteVacationEndpoint);
 app.put("/vacation", put_vacation_1.putVacationEndpoint);
 app.post("/vacation/follow", post_follow_1.postFollowEndpoint);
 app.post("/vacation/unfollow", post_unfollow_1.unFollowEndpoint);
+app.post("/vacations", post_vacations_1.postQueryVacationsEndpoint);
 // app.get("/vacation/followed", getFollowedVacationsEndpoint);
 app.listen(PORT, (err) => {
     if (err) {

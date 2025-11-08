@@ -28,7 +28,6 @@ const putVacationEndpoint = (req, res, next) => __awaiter(void 0, void 0, void 0
         return res.status(404).send("Vacation not found");
     }
     const body = req.body;
-    // Validate and update fields
     const destination = body.destination || vacation.destination;
     if (typeof destination !== "string" || destination.trim().length === 0) {
         return res.status(400).send("Invalid destination");
