@@ -11,10 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.queryVacations = void 0;
 const _1 = require("./");
-const queryVacations = (limit, pageNumber, onlyFollowed, filterDate) => __awaiter(void 0, void 0, void 0, function* () {
+const queryVacations = (limit, pageNumber, onlyFollowed, filterDate, email) => __awaiter(void 0, void 0, void 0, function* () {
     const connection = yield (0, _1.getConnection)();
-    const offest = String(limit * pageNumber);
-    const [result] = yield (connection === null || connection === void 0 ? void 0 : connection.execute(getQuerySql(filterDate, offest), [String(limit)]));
+    const offset = String(limit * pageNumber);
+    const [result] = yield (connection === null || connection === void 0 ? void 0 : connection.execute(getQuerySql(filterDate, onlyFollowed, offset), [String(limit), email]));
     return result;
 });
 exports.queryVacations = queryVacations;
@@ -32,9 +32,17 @@ const getFilterDateCondition = (filterDate) => {
         return 'true';
     }
 };
-const getQuerySql = (filterDate, offest) => {
+const getFollowedCondition = (onlyFollowed) => {
+    if (onlyFollowed) {
+        return `JOIN northwind.followers as f ON v.id = f.vacation_id AND f.user_email = ?`;
+    }
+    else {
+        return '';
+    }
+};
+const getQuerySql = (filterDate, onlyFollowed, offset) => {
     return `SELECT v.id, v.destination, v.description, v.start_date, v.end_date, v.image FROM northwind.vacations as v
-    WHERE ${getFilterDateCondition(filterDate)}
+    WHERE ${getFilterDateCondition(filterDate)} ${getFollowedCondition(onlyFollowed)}
     LIMIT ?
-    OFFSET ${offest}`;
+    OFFSET ${offset}`;
 };

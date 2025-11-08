@@ -17,6 +17,13 @@ const postQueryVacationsEndpoint = (req, res) => __awaiter(void 0, void 0, void 
     let pageNumber = body.pageNumber;
     let filterDate = body.filterDate;
     let onlyFollowed = body.onlyFollowed;
+    const email = body.email;
+    if (!email) {
+        return res.status(400).send("email is required");
+    }
+    if (typeof email !== "string" || email.trim().length === 0) {
+        return res.status(400).send("Invalid email");
+    }
     if (limit === undefined || isNaN(Number(limit)) || Number(limit) <= 0) {
         return res.status(400).send("Invalid limit");
     }
@@ -46,7 +53,7 @@ const postQueryVacationsEndpoint = (req, res) => __awaiter(void 0, void 0, void 
     else if (typeof onlyFollowed !== "boolean") {
         return res.status(400).send("Invalid onlyFollowed");
     }
-    const result = yield (0, queryVacations_1.queryVacations)(limit, pageNumber, onlyFollowed, filterDate);
+    const result = yield (0, queryVacations_1.queryVacations)(limit, pageNumber, onlyFollowed, filterDate, email);
     return res.status(200).json(result);
 });
 exports.postQueryVacationsEndpoint = postQueryVacationsEndpoint;
