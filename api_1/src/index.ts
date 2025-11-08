@@ -32,7 +32,7 @@ app.put("/vacation", putVacationEndpoint);
 app.post("/vacation/follow", postFollowEndpoint);
 app.post("/vacation/unfollow", unFollowEndpoint);
 app.post("/vacations", postQueryVacationsEndpoint);
-app.post("/user/post", registerEndpoint)
+app.post("/register", registerEndpoint);
 app.post("/user/login", postLoginEndpoint);
 // app.get("/vacation/followed", getFollowedVacationsEndpoint);
 app.listen(PORT, (err) => {
