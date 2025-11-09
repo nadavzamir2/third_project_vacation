@@ -21,7 +21,8 @@ const fromVacationDTO = (dto) => {
         startDate: dto.start_date,
         endDate: dto.end_date,
         price: dto.price,
-        image: dto.image
+        image: dto.image,
+        count: dto === null || dto === void 0 ? void 0 : dto.count,
     };
 };
 exports.fromVacationDTO = fromVacationDTO;

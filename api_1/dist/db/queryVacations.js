@@ -14,7 +14,8 @@ const _1 = require("./");
 const queryVacations = (limit, pageNumber, onlyFollowed, filterDate, email) => __awaiter(void 0, void 0, void 0, function* () {
     const connection = yield (0, _1.getConnection)();
     const offset = String(limit * pageNumber);
-    const [result] = yield (connection === null || connection === void 0 ? void 0 : connection.execute(getQuerySql(filterDate, onlyFollowed, offset), [String(limit), email]));
+    const params = onlyFollowed ? [email, String(limit)] : [String(limit)];
+    const [result] = yield (connection === null || connection === void 0 ? void 0 : connection.execute(getQuerySql(filterDate, onlyFollowed, offset), params));
     return result;
 });
 exports.queryVacations = queryVacations;
@@ -34,15 +35,24 @@ const getFilterDateCondition = (filterDate) => {
 };
 const getFollowedCondition = (onlyFollowed) => {
     if (onlyFollowed) {
-        return `JOIN northwind.followers as f ON v.id = f.vacation_id AND f.user_email = ?`;
+        return `JOIN northwind.followers as f1 ON v.id = f1.vacation_id AND f1.user_email = ?`;
     }
     else {
         return '';
     }
 };
 const getQuerySql = (filterDate, onlyFollowed, offset) => {
-    return `SELECT v.id, v.destination, v.description, v.start_date, v.end_date, v.image FROM northwind.vacations as v
-    WHERE ${getFilterDateCondition(filterDate)} ${getFollowedCondition(onlyFollowed)}
+    return `SELECT 
+    v.id, v.destination, v.description, v.start_date, v.end_date, v.image, c.count, COUNT(*) OVER() as total 
+    FROM northwind.vacations as v
+    ${getFollowedCondition(onlyFollowed)}
+    LEFT JOIN 
+    (
+        SELECT f2.vacation_id, COUNT(f2.user_email) as count FROM northwind.followers as f2 GROUP BY f2.vacation_id
+    )
+    as c ON c.vacation_id = v.id
+    WHERE ${getFilterDateCondition(filterDate)}
+    ORDER BY v.start_date ASC
     LIMIT ?
     OFFSET ${offset}`;
 };

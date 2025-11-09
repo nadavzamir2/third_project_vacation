@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { queryVacations } from "../db/queryVacations";
 import { FilterDate } from "../types";
+import { fromVacationDTO } from "../mappers";
 
 export const postQueryVacationsEndpoint = async (req: Request, res: Response) => {
     const body = req.body;
@@ -46,5 +47,8 @@ export const postQueryVacationsEndpoint = async (req: Request, res: Response) =>
 
     const result = await queryVacations(limit, pageNumber, onlyFollowed, filterDate, email)
 
-    return res.status(200).json(result);
+    return res.status(200).json({ 
+        list: result.map(fromVacationDTO),
+        currentPage: pageNumber,
+        total: result.length > 0 ? result[0].total : 0 });
 }

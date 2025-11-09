@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postQueryVacationsEndpoint = void 0;
 const queryVacations_1 = require("../db/queryVacations");
+const mappers_1 = require("../mappers");
 const postQueryVacationsEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const limit = body.limit;
@@ -54,6 +55,10 @@ const postQueryVacationsEndpoint = (req, res) => __awaiter(void 0, void 0, void 
         return res.status(400).send("Invalid onlyFollowed");
     }
     const result = yield (0, queryVacations_1.queryVacations)(limit, pageNumber, onlyFollowed, filterDate, email);
-    return res.status(200).json(result);
+    return res.status(200).json({
+        list: result.map(mappers_1.fromVacationDTO),
+        currentPage: pageNumber,
+        total: result.length > 0 ? result[0].total : 0
+    });
 });
 exports.postQueryVacationsEndpoint = postQueryVacationsEndpoint;

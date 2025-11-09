@@ -1,3 +1,4 @@
+import { count } from "console";
 import { Vacation } from "./types";
 
 export const toVacationDTO = (vacation: Vacation) => {
@@ -20,6 +21,7 @@ export const fromVacationDTO = (dto: any) => {
         startDate: dto.start_date,
         endDate: dto.end_date,
         price: dto.price,
-        image: dto.image
+        image: dto.image,
+        count: dto?.count,
     };
 }
