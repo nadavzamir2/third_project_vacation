@@ -33,5 +33,9 @@ export { createVacation } from "./createVacation";
 export { deleteVacation } from "./deleteVacation";
 export { getVacation } from "./getVacation";
 export { updateVacation } from "./updateVacation";
+export { queryVacations } from "./queryVacations";
+export { removeFollower } from "./removeFollower";
+export {metrix} from "./metrix";
+export {registerUser} from "./registerUser";
 
 export default getConnection;

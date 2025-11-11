@@ -12,8 +12,8 @@ import { unFollowEndpoint } from "./endpoints/post.unfollow";
 import { postQueryVacationsEndpoint } from "./endpoints/post.vacations";
 import { registerEndpoint } from "./endpoints/register";
 import { postLoginEndpoint } from "./endpoints/post.login";
-// import { deleteFollowerEndpoint } from "./endpoints/delete.follower";
-// import { getFollowedVacationsEndpoint } from "./endpoints/get.followed.vacations";
+import { getMetrixEndpoint } from "./endpoints/get.metrix";
+
 
 dotenv.config();
 const app = express();
@@ -34,7 +34,8 @@ app.post("/vacation/unfollow", unFollowEndpoint);
 app.post("/vacations", postQueryVacationsEndpoint);
 app.post("/register", registerEndpoint);
 app.post("/user/login", postLoginEndpoint);
-// app.get("/vacation/followed", getFollowedVacationsEndpoint);
+app.get("/metrix", getMetrixEndpoint);
+
 app.listen(PORT, (err) => {
     if (err) {
         console.log(`\x1b[31m${err.message}\x1b[0m`);
