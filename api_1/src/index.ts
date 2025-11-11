@@ -12,7 +12,7 @@ import { unFollowEndpoint } from "./endpoints/post.unfollow";
 import { postQueryVacationsEndpoint } from "./endpoints/post.vacations";
 import { registerEndpoint } from "./endpoints/register";
 import { postLoginEndpoint } from "./endpoints/post.login";
-import { getMetrixEndpoint } from "./endpoints/get.metrix";
+import { getMetricsEndpoint as getMetricsEndpoint } from "./endpoints/get.metrics";
 
 
 dotenv.config();
@@ -34,7 +34,7 @@ app.post("/vacation/unfollow", unFollowEndpoint);
 app.post("/vacations", postQueryVacationsEndpoint);
 app.post("/register", registerEndpoint);
 app.post("/user/login", postLoginEndpoint);
-app.get("/metrix", getMetrixEndpoint);
+app.get("/metrics", getMetricsEndpoint);
 
 app.listen(PORT, (err) => {
     if (err) {

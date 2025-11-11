@@ -15,7 +15,7 @@ const post_unfollow_1 = require("./endpoints/post.unfollow");
 const post_vacations_1 = require("./endpoints/post.vacations");
 const register_1 = require("./endpoints/register");
 const post_login_1 = require("./endpoints/post.login");
-const get_metrix_1 = require("./endpoints/get.metrix");
+const get_metrics_1 = require("./endpoints/get.metrics");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -32,7 +32,7 @@ app.post("/vacation/unfollow", post_unfollow_1.unFollowEndpoint);
 app.post("/vacations", post_vacations_1.postQueryVacationsEndpoint);
 app.post("/register", register_1.registerEndpoint);
 app.post("/user/login", post_login_1.postLoginEndpoint);
-app.get("/metrix", get_metrix_1.getMetrixEndpoint);
+app.get("/metrics", get_metrics_1.getMetricsEndpoint);
 app.listen(PORT, (err) => {
     if (err) {
         console.log(`\x1b[31m${err.message}\x1b[0m`);
