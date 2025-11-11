@@ -19,5 +19,10 @@ export type User = {
     firstName: string;
     lastName: string;
     email: string;
-    password: string;
+    role: Role;
+}
+
+export const enum Role {
+    Admin = "ADMIN",
+    User = "USER"
 }

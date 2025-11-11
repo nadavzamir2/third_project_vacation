@@ -21,13 +21,13 @@ const logInUser = (email, password) => __awaiter(void 0, void 0, void 0, functio
         firstName: rows[0].first_name,
         lastName: rows[0].last_name,
         email: rows[0].email,
-        password: rows[0].password,
+        role: rows[0].role,
     };
     return user;
 });
 exports.logInUser = logInUser;
 const logInUserQuery = () => {
-    const query = `SELECT first_name, last_name, email, password FROM northwind.users
+    const query = `SELECT first_name, last_name, email, role FROM northwind.users
                    WHERE email = ? AND password = ?`;
     return query;
 };

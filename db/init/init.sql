@@ -65,7 +65,9 @@ INSERT INTO `northwind`.`users` (`first_name`, `last_name`, `email`, `password`,
 ('Lisa', 'Anderson', 'lisa.anderson@email.com', 'lisa2025', 'ADMIN'),
 ('James', 'Wilson', 'james.wilson@email.com', 'james999', 'USER'),
 ('Rachel', 'Green', 'rachel.green@email.com', 'rachel456', 'USER'),
-('Tom', 'Harris', 'tom.harris@email.com', 'tom1234', 'USER');
+('Tom', 'Harris', 'tom.harris@email.com', 'tom1234', 'USER'),
+('Nadav', 'zamir', 'nadav.zamir@email.com', 'nadav123', 'ADMIN');
+;
 
 -- Insert dummy data for Followers
 INSERT INTO `northwind`.`followers` (`user_email`, `vacation_id`) VALUES

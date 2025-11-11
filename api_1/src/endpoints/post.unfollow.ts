@@ -5,14 +5,8 @@ import { removeFollower } from "../db/removeFollower";
 export const unFollowEndpoint = async (req: Request, res: Response) => {
     try {
         const body = req.body;
-        const email = body.email;
+       const email = (req as any).user.email;
         const vacationId = body.vacationId;
-        if (!email) {
-            return res.status(400).send("email is required");
-        }
-        if (typeof email !== "string" || email.length == 0) {
-            return res.status(400).send("invalid email");
-        }
         if (!vacationId) {
             return res.status(400).send("vacationId is required");
         }

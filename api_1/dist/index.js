@@ -16,23 +16,61 @@ const post_vacations_1 = require("./endpoints/post.vacations");
 const register_1 = require("./endpoints/register");
 const post_login_1 = require("./endpoints/post.login");
 const get_metrics_1 = require("./endpoints/get.metrics");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
 app.use(express_1.default.json());
+const onlyAdmin = (req, res, next) => {
+    const role = req.user.role;
+    if (role === "ADMIN" /* Role.Admin */) {
+        return next();
+    }
+    else {
+        return res.status(403).send("Permission Denied");
+    }
+};
+const onlyUser = (req, res, next) => {
+    const role = req.user.role;
+    if (role === "USER" /* Role.User */) {
+        return next();
+    }
+    else {
+        return res.status(403).send("Permission Denied");
+    }
+};
+const verifyToken = (req, res, next) => {
+    const secret = process.env.SECRET;
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) {
+        return res.status(401).send("No token provided");
+    }
+    if (!authHeader.startsWith("Bearer ")) {
+        return res.status(401).send("Invalid token format");
+    }
+    const token = authHeader.split(" ")[1];
+    try {
+        const decoded = jsonwebtoken_1.default.verify(token, secret);
+        req.user = decoded;
+        next();
+    }
+    catch (error) {
+        return res.status(403).send("Permission Denied");
+    }
+};
 app.get("/hello", (req, res, next) => {
     res.send("Hello World!");
 });
-app.get("/vacation", get_vacation_1.getVacationEndpoint);
-app.post("/vacation", post_vacation_1.postVacationEndpoint);
-app.delete("/vacation", delete_vacation_1.deleteVacationEndpoint);
-app.put("/vacation", put_vacation_1.putVacationEndpoint);
-app.post("/vacation/follow", post_follow_1.postFollowEndpoint);
-app.post("/vacation/unfollow", post_unfollow_1.unFollowEndpoint);
-app.post("/vacations", post_vacations_1.postQueryVacationsEndpoint);
+app.get("/vacation", verifyToken, get_vacation_1.getVacationEndpoint);
+app.post("/vacation", verifyToken, onlyAdmin, post_vacation_1.postVacationEndpoint);
+app.delete("/vacation", verifyToken, onlyAdmin, delete_vacation_1.deleteVacationEndpoint);
+app.put("/vacation", verifyToken, onlyAdmin, put_vacation_1.putVacationEndpoint);
+app.post("/vacation/follow", verifyToken, onlyUser, post_follow_1.postFollowEndpoint);
+app.post("/vacation/unfollow", verifyToken, onlyUser, post_unfollow_1.unFollowEndpoint);
+app.post("/vacations", verifyToken, onlyAdmin, post_vacations_1.postQueryVacationsEndpoint);
 app.post("/register", register_1.registerEndpoint);
-app.post("/user/login", post_login_1.postLoginEndpoint);
-app.get("/metrics", get_metrics_1.getMetricsEndpoint);
+app.post("/login", post_login_1.postLoginEndpoint);
+app.get("/metrics", verifyToken, onlyAdmin, get_metrics_1.getMetricsEndpoint);
 app.listen(PORT, (err) => {
     if (err) {
         console.log(`\x1b[31m${err.message}\x1b[0m`);

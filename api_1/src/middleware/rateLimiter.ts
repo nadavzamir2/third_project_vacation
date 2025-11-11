@@ -1,8 +1,8 @@
 import rateLimit from "express-rate-limit";
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  limit: 10000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  windowMs: 15 * 60 * 1000,
+  limit: 10000,
   message: "Please try again later...",
   statusCode: 409,
 });

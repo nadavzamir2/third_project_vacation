@@ -2,7 +2,7 @@ import {getConnection} from "./";
 import { User } from "../types";
 
 
-export const registerUser = async (user: User) => {
+export const registerUser = async (user: Omit<User, "id" | "role"> & {password: string}) => {
     const connection = await getConnection();
     const result = connection?.execute(registerUserQuery(), [
         user.firstName,

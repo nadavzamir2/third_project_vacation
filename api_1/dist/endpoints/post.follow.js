@@ -14,13 +14,7 @@ const db_1 = require("../db");
 const isFollow_1 = require("../db/isFollow");
 const postFollowEndpoint = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
-    const userEmail = body.email;
-    if (!userEmail) {
-        return res.status(400).send("email is required");
-    }
-    if (typeof userEmail !== "string" || userEmail.trim().length === 0) {
-        return res.status(400).send("Invalid email");
-    }
+    const userEmail = req.user.email;
     const vacationId = body.vacationId;
     if (!vacationId) {
         return res.status(400).send("vacationId is required");
@@ -34,12 +28,14 @@ const postFollowEndpoint = (req, res, next) => __awaiter(void 0, void 0, void 0,
     }
     const alreadyFollowing = yield (0, isFollow_1.isFollow)(userEmail, Number(vacationId));
     if (alreadyFollowing) {
-        return res.status(200).json({});
+        return res.status(200).json({
+            message: "Already following this vacation"
+        });
     }
     try {
         const success = yield (0, db_1.addFollower)(userEmail, Number(vacationId));
         if (success) {
-            return res.status(200).json({});
+            return res.status(200).json({ message: "Successfully followed vacation" });
         }
         else {
             return res.status(500).send("Failed to follow vacation");

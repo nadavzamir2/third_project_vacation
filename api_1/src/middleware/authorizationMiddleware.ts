@@ -17,7 +17,6 @@ export interface ReqLocal extends Request {
     };
 }
 
-// Example of token api validation, not production
 export default function authorizationMiddleware(
     req: Request,
     res: Response,

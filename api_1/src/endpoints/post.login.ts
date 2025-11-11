@@ -1,5 +1,18 @@
 import { Request, Response } from "express";
 import { logInUser } from "../db/logInUser";
+import jwt from "jsonwebtoken";
+import { User } from "../types";
+
+const createToken = (user: User) => {
+    const secret = process.env.SECRET as string;
+    const payload = {
+        name: user.firstName,
+        email: user.email,
+        role: user.role
+    };
+    const token = jwt.sign(payload, secret, { expiresIn: '5h' });
+    return token;
+}
 
 export const postLoginEndpoint = async (req: Request, res: Response) => {
     const body = req.body;
@@ -18,6 +31,8 @@ export const postLoginEndpoint = async (req: Request, res: Response) => {
         return res.status(401).send("Invalid email or password");
     }
 
-    res.status(200).send({ message: "Login successful", user });
+    const token = createToken(user);
+
+    res.status(200).send({ token, user });
 }
 

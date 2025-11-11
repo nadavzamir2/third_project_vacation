@@ -8,9 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postLoginEndpoint = void 0;
 const logInUser_1 = require("../db/logInUser");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const createToken = (user) => {
+    const secret = process.env.SECRET;
+    const payload = {
+        name: user.firstName,
+        email: user.email,
+        role: user.role
+    };
+    const token = jsonwebtoken_1.default.sign(payload, secret, { expiresIn: '5h' });
+    return token;
+};
 const postLoginEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const email = body.email;
@@ -25,6 +39,7 @@ const postLoginEndpoint = (req, res) => __awaiter(void 0, void 0, void 0, functi
     if (!user) {
         return res.status(401).send("Invalid email or password");
     }
-    res.status(200).send({ message: "Login successful", user });
+    const token = createToken(user);
+    res.status(200).send({ token, user });
 });
 exports.postLoginEndpoint = postLoginEndpoint;

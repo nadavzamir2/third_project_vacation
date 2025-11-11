@@ -9,7 +9,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const logger_1 = __importDefault(require("../logger"));
 const httpStatus_1 = require("../enum/httpStatus");
 dotenv_1.default.config();
-// Example of token api validation, not production
 function authorizationMiddleware(req, res, next) {
     const token = req.headers["authorization"];
     if (token) {
