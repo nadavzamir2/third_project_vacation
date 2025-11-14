@@ -12,12 +12,12 @@ services:
     volumes:
       - ./db/init/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  # api-client:
-  #   build: ./security-app-starter
-  #   container_name: api-client
-  #   restart: always
-  #   ports:
-  #     - "3001:3001"
+  api-client:
+    build: ./app
+    container_name: api-client
+    restart: always
+    ports:
+      - "3001:3001"
 
   api:
     build: ./api_1
