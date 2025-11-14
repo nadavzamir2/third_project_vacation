@@ -11,8 +11,8 @@ import { postQueryVacationsEndpoint } from "./endpoints/post.vacations";
 import { registerEndpoint } from "./endpoints/register";
 import { postLoginEndpoint } from "./endpoints/post.login";
 import { getMetricsEndpoint as getMetricsEndpoint } from "./endpoints/get.metrics";
-import { Role } from "./types";
-import jwt from "jsonwebtoken";
+import { verifyToken } from "./auth/verifyToken";
+import { onlyAdmin, onlyUser } from "./auth/verifyRoles";
 
 
 dotenv.config();
@@ -20,45 +20,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-
-const onlyAdmin = (req: Request, res: Response, next: NextFunction) => {
-    const role = (req as any).user.role;
-    if (role === Role.Admin) {
-        return next();
-    } else {
-        return res.status(403).send("Permission Denied");
-    }
-}
-const onlyUser = (req: Request, res: Response, next: NextFunction) => {
-    const role = (req as any).user.role;
-    if (role === Role.User) {
-        return next();
-    } else {
-        return res.status(403).send("Permission Denied");
-    }
-}
-
-
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    const secret = process.env.SECRET as string;
-    const authHeader = req.headers["authorization"] as string;
-    if (!authHeader) {
-        return res.status(401).send("No token provided");
-    }
-    if (!authHeader.startsWith("Bearer ")) {
-        return res.status(401).send("Invalid token format");
-    }
-    const token = authHeader.split(" ")[1];
-    try {
-        const decoded = jwt.verify(token, secret) as jwt.JwtPayload;
-        (req as any).user = decoded as { role: Role; name: string; email: string };
-        next();
-    } catch (error) {
-        return res.status(403).send("Permission Denied");
-    }
-}
-
-
 
 app.get("/hello", (req, res, next) => {
     res.send("Hello World!");
