@@ -26,3 +26,8 @@ export const enum Role {
     Admin = "ADMIN",
     User = "USER"
 }
+
+export enum ERRORS {
+    UNAUTH = "UNAUTH",
+    BAD_REQUEST = "BAD_REQUEST"
+}
