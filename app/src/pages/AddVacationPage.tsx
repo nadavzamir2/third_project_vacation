@@ -19,6 +19,5 @@ export const AddVacationPage = () => {
     <div className="add-vacation-page">
       <h1>Add Vacation</h1>
     </div>
-)
+  )
 }
-  const [error, setError] = useState("");
