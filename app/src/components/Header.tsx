@@ -1,10 +1,10 @@
-import { UserContext } from "@/context/user.context";
+import { useUser } from "@/context/user.context";
 import { isAuthenticated, logout } from "@/services/auth";
 import { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Header() {
-  const { email, role } = useContext(UserContext)
+  const { email } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const authed = isAuthenticated();

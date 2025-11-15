@@ -6,18 +6,19 @@ import { EditVacationPage } from "@/pages/EditVacationPage";
 import { MetricsPage } from "@/pages/MetricsPage";
 import { AddVacationPage } from "@/pages/AddVacationPage";
 import { ManageVacationsPage } from "@/pages/ManageVacationPage";
+import { Role } from "@/types";
 
 
 export default function MainLayout() {
   return (
-      <>
+    <>
       <Header />
       <main className="container">
         <Routes>
           <Route
             path="/"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute roles={[Role.User]}>
                 <VacationsPage />
               </ProtectedRoute>
             }
@@ -25,7 +26,7 @@ export default function MainLayout() {
           <Route
             path="/vacations"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute roles={[Role.User]}>
                 <VacationsPage />
               </ProtectedRoute>
             }
@@ -33,7 +34,7 @@ export default function MainLayout() {
           <Route
             path="/metrics"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute roles={[Role.Admin]}>
                 <MetricsPage />
               </ProtectedRoute>
             }
@@ -41,7 +42,7 @@ export default function MainLayout() {
           <Route
             path="/create"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute roles={[Role.Admin]}>
                 <AddVacationPage />
               </ProtectedRoute>
             }
@@ -49,7 +50,7 @@ export default function MainLayout() {
           <Route
             path="/edit/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute roles={[Role.Admin]}>
                 <EditVacationPage />
               </ProtectedRoute>
             }
@@ -57,7 +58,7 @@ export default function MainLayout() {
           <Route
             path="/manage"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute roles={[Role.Admin]}>
                 <ManageVacationsPage />
               </ProtectedRoute>
             }
@@ -72,6 +73,6 @@ export default function MainLayout() {
           />
         </Routes>
       </main>
-      </>
+    </>
   );
 }

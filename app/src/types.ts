@@ -23,3 +23,8 @@ export type Filters = {
 };
 
 
+export const enum Role {
+    Admin = "ADMIN",
+    User = "USER"
+}
+
