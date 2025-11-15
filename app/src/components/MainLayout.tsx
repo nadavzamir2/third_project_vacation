@@ -3,7 +3,7 @@ import Header from "./Header";
 import ProtectedRoute from "./ProtectedRoute";
 import { VacationsPage } from "@/pages/VacationsPage";
 import { EditVacationPage } from "@/pages/EditVacationPage";
-import { MetricsPage } from "@/pages/metricsPage";
+import { MetricsPage } from "@/pages/MetricsPage";
 import { AddVacationPage } from "@/pages/AddVacationPage";
 import { ManageVacationsPage } from "@/pages/ManageVacationPage";
 
