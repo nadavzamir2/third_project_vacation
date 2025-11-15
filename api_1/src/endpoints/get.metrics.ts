@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { getVacation } from "../db/getVacation";
 import { queryMetrics } from "../db/metrics";
 
 export const getMetricsEndpoint = async (req: Request, res: Response, next: NextFunction) => {

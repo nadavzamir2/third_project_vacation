@@ -1,8 +1,10 @@
 import { getConnection } from ".";
-import { Vacation } from "../types";
-import { fromVacationDTO } from "../mappers";
-import { getVacation } from ".";
-import { Connection } from "mysql2/typings/mysql/lib/Connection";
+
+type VacationMetric = {
+    id: number;
+    destination: string;
+    followersCount: number;
+}
 
 
 export const queryMetrics = async () => {
@@ -11,7 +13,7 @@ export const queryMetrics = async () => {
         throw new Error("Database connection failed");
     }
     const [result] = await connection.execute(getMetricsQuery());
-    return result;
+    return result as VacationMetric[];
 }
 
 export const getMetricsQuery = () => {

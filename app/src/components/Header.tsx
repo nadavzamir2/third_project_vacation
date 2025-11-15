@@ -1,12 +1,13 @@
+import { UserContext } from "@/context/user.context";
+import { isAuthenticated, logout } from "@/services/auth";
+import { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { isAuthenticated, logout } from "../services/auth";
-import { useEmail } from "@/context/roles.context";
 
 export default function Header() {
+  const { email, role } = useContext(UserContext)
   const location = useLocation();
   const navigate = useNavigate();
   const authed = isAuthenticated();
-  const email = useEmail();
   const onLogout = () => {
     logout();
     navigate("/login");

@@ -13,12 +13,14 @@ import { postLoginEndpoint } from "./endpoints/post.login";
 import { getMetricsEndpoint as getMetricsEndpoint } from "./endpoints/get.metrics";
 import { verifyToken } from "./auth/verifyToken";
 import { onlyAdmin, onlyUser } from "./auth/verifyRoles";
+import cors from "cors";
 
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 app.get("/hello", (req, res, next) => {
@@ -30,7 +32,7 @@ app.delete("/vacation", verifyToken, onlyAdmin, deleteVacationEndpoint);
 app.put("/vacation", verifyToken, onlyAdmin, putVacationEndpoint);
 app.post("/vacation/follow", verifyToken, onlyUser, postFollowEndpoint);
 app.post("/vacation/unfollow", verifyToken, onlyUser, unFollowEndpoint);
-app.post("/vacations", verifyToken, onlyAdmin, postQueryVacationsEndpoint);
+app.post("/vacations", verifyToken, postQueryVacationsEndpoint);
 app.post("/register", registerEndpoint);
 app.post("/login", postLoginEndpoint);
 app.get("/metrics", verifyToken, onlyAdmin, getMetricsEndpoint);

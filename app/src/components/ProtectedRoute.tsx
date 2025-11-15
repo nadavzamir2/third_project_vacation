@@ -1,6 +1,7 @@
-import { isAuthenticated } from '../services/auth'
 import { Navigate, useLocation } from 'react-router-dom'
 import { ReactNode } from 'react'
+import { isAuthenticated } from '@/services/auth';
+
 
 export default function ProtectedRoute({ children }: { children: ReactNode }) {
   const location = useLocation();
@@ -8,9 +9,4 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
   return <>{children}</>
-}
-
-
-const MyPage = () => {
-  return <ProtectedRoute><div>MyPage</div></ProtectedRoute>
 }

@@ -1,30 +1,64 @@
-import { RolesProvider } from "@/context/roles.context";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./Header";
 import ProtectedRoute from "./ProtectedRoute";
-import Data from "@/pages/Data";
-import Expenses from "@/pages/expenses";
+import { VacationsPage } from "@/pages/VacationsPage";
+import { EditVacationPage } from "@/pages/EditVacationPage";
+import { MetricsPage } from "@/pages/metricsPage";
+import { AddVacationPage } from "@/pages/AddVacationPage";
+import { ManageVacationsPage } from "@/pages/ManageVacationPage";
+
 
 export default function MainLayout() {
   return (
-    <RolesProvider>
+      <>
       <Header />
       <main className="container">
         <Routes>
-          <Route path="/" element={<Navigate to="/data" replace />} />
           <Route
-            path="/data"
+            path="/"
             element={
               <ProtectedRoute>
-                <Data />
+                <VacationsPage />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/expenses"
+            path="/vacations"
             element={
               <ProtectedRoute>
-                <Expenses />
+                <VacationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/metrics"
+            element={
+              <ProtectedRoute>
+                <MetricsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <AddVacationPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditVacationPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/manage"
+            element={
+              <ProtectedRoute>
+                <ManageVacationsPage />
               </ProtectedRoute>
             }
           />
@@ -38,6 +72,6 @@ export default function MainLayout() {
           />
         </Routes>
       </main>
-    </RolesProvider>
+      </>
   );
 }

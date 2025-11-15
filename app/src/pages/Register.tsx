@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register as registerUser } from "../services/auth";
+import { createUser as registerUser } from "@/services/auth";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ export default function Register() {
     e.preventDefault();
     setError(null);
     try {
-      await registerUser({ email, password });
+      await registerUser();
       navigate("/login");
     } catch (err: any) {
       setError(err?.message ?? "Registration failed");

@@ -1,20 +1,16 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Header from "./components/Header";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Data from "./pages/Data";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Expenses from "./pages/expenses";
-import { RolesProvider } from "./context/roles.context";
+import { UserProvider } from "./context/user.context";
 import MainLayout from "./components/MainLayout";
 
 export default function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login text="Please log in" />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/*" element={<MainLayout />} />
+        <Route path="/*" element={<UserProvider><MainLayout /></UserProvider>} />
       </Routes>
     </div>
   );

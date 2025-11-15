@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { deleteVacation } from "../db/deleteVacation";  
 
 export const deleteVacationEndpoint = async (req: Request, res: Response) => {  
