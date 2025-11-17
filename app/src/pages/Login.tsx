@@ -4,8 +4,8 @@ import { loginUser } from "@/services/auth";
 import { Role } from "@/types";
 
 export default function Login({ text }: { text?: string }) {
-  const [email, setEmail] = useState("nadav.zamir@email.com");
-  const [password, setPassword] = useState("nadav123");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const { search } = useLocation();

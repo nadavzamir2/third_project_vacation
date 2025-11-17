@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { hasOnlyEnglishLetters, isOnlyEnglishLetters } from "../utils/latinLetters";
+import { hasOnlyEnglishLetters, noForeignLetters } from "../utils/latinLetters";
 import { registerUser } from "../db/registerUser";
 import { getConnection } from "../db";
 import { email } from "zod";
@@ -33,7 +33,7 @@ export const registerEndpoint = async (req: Request, res: Response) => {
     if (typeof email !== "string" || email.trim().length === 0) {
         return res.status(400).send("Invalid email");
     }
-    if (!isOnlyEnglishLetters(email)) {
+    if (!noForeignLetters(email)) {
         return res.status(400).send("Forign letters are not allowed in email");
     }
     if (email.length > 30) {
@@ -51,7 +51,7 @@ export const registerEndpoint = async (req: Request, res: Response) => {
     if (password.length > 20) {
         return res.status(400).send("Password too long (maximum 20 letters)");
     }
-    if (!isOnlyEnglishLetters(password)) {
+    if (!noForeignLetters(password)) {
         return res.status(400).send("Forign letters are not allowed in password");
     }
     else {
@@ -78,4 +78,4 @@ const checkEmailQuery = () => {
     const query = `SELECT * FROM northwind.users WHERE email = ?`;
     return query;
 }
- 
+

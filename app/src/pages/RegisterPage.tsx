@@ -1,10 +1,14 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUser as registerUser } from "@/services/auth";
+import { loginUser, createUser as registerUser } from "@/services/auth";
+import { useEmailField } from "./hooks/fields/useEmailField";
+import { usePasswordField } from "./hooks/fields/usePasswordField";
+import { Role } from "@/types";
 
-export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+export default function RegisterPage() {
+  const { email, onEmailChange, emailError } = useEmailField("");
+  const { password, onPasswordChange, passwordError } = usePasswordField("");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -13,7 +17,13 @@ export default function Register() {
     setError(null);
     try {
       await registerUser();
-      navigate("/login");
+      const user = await loginUser({ email, password });
+      if (user.role === Role.Admin) {
+        navigate("/manage", { replace: true });
+      }
+      else {
+        navigate("/", { replace: true });
+      }
     } catch (err: any) {
       setError(err?.message ?? "Registration failed");
     }
@@ -27,20 +37,22 @@ export default function Register() {
           <label>
             Email
             <input
-              type="email"
+              type="text"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => onEmailChange(e.target.value)}
               required
             />
+            {emailError && <div className="error">{emailError}</div>}
           </label>
           <label>
             Password
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => onPasswordChange(e.target.value)}
               required
             />
+            {passwordError && <div className="error">{passwordError}</div>}
           </label>
           {error && <div className="error">{error}</div>}
           <button className="btn" type="submit">

@@ -11,6 +11,7 @@ export const logout = () => {
 }
 
 export const createUser = () => {
+  throw new Error("Registration is currently disabled");
 }
 
 export const loginUser = async ({ email, password }: { email: string, password: string }) => {

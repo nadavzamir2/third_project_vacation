@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Header() {
-  const { email } = useUser();
+  const { firstName, email } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const authed = isAuthenticated();
@@ -23,12 +23,12 @@ export default function Header() {
       </div>
 
       <nav className="nav">
-        <Link to="/user"> {email ? email.split("@")?.[0] : ""}</Link>
+        <Link to="/manage"> {firstName}</Link>
         <Link
-          className={location.pathname === "/data" ? "active" : ""}
-          to="/data"
+          className={location.pathname === "/create" ? "active" : ""}
+          to="/create"
         >
-          Data
+          Add
         </Link>
         {!authed && (
           <>

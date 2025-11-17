@@ -1,6 +1,7 @@
 import { queryVacations } from "@/services/queryVacations";
 import { Vacation } from "@/types";
 import { useEffect, useState } from "react";
+import { VacationCard } from "./VacationCard";
 
 export const ManageVacationsPage = () => {
     const [vacations, setVacations] = useState<Array<Vacation>>([]);
@@ -13,7 +14,7 @@ export const ManageVacationsPage = () => {
         <h1>Manage Vacations</h1>
         <ul>
             {vacations.map(vacation => (
-                <li key={vacation.id}>{vacation.destination}</li>
+                <VacationCard key={vacation.id} vacation={vacation} />
             ))}
         </ul>
         </div>;
