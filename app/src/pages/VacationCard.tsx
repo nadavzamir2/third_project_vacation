@@ -1,16 +1,16 @@
+import { deleteVacation } from "@/services/deleteVacation";
 import { Vacation } from "@/types";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export const VacationCard = ({vacation}: {vacation: Vacation}) => {
-    const [count, setCount] = useState(vacation.count);
-    const navigate = useNavigate(); 
+export const VacationCard = ({ vacation, managedMode, onDelete }: { vacation: Vacation; managedMode: boolean; onDelete?: (id: number) => void }) => {
+    const [counter, setCount] = useState(vacation.count);
+    const navigate = useNavigate();
     useEffect(() => {
-        if (count > 10) {
+        if (counter > 10) {
             navigate("/edit/" + vacation.id, { replace: true });
         }
-    }, [count]);
-    
+    }, [counter]);
     return (
         <div>
             <h2>Vacation Card</h2>
@@ -18,8 +18,13 @@ export const VacationCard = ({vacation}: {vacation: Vacation}) => {
             <p>Price: {vacation.price}</p>
             <p>Start Date: {vacation.startDate}</p>
             <p>End Date: {vacation.endDate}</p>
-            <p>Followers: {count}</p>
-            <button onClick={() => setCount(count + 1)}>({vacation.count}) Follow</button>
+            <p>Followers: {counter}</p>
+            {managedMode ? (<>
+            <Link to={`/edit/${vacation.id}`}>Edit</Link>
+            <button onClick={() => onDelete?.(vacation.id)}>Delete</button>
+            </>)
+                : (<button onClick={() => setCount(counter + 1)}>({counter}) Followers</button>)}
+
         </div>
     );
 }

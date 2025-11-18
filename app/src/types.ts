@@ -1,7 +1,7 @@
-export type Vacation= {
+export type Vacation = {
   destination: string;
-description: string;
-  id: string;
+  description: string;
+  id: number;
   startDate: string;
   endDate: string;
   image: string;
@@ -10,10 +10,10 @@ description: string;
 }
 
 export const enum FilterDate {
-    All = "ALL",
-    Past = "PAST",
-    Upcoming = "UPCOMING",
-    Active = "ACTIVE"
+  All = "ALL",
+  Past = "PAST",
+  Upcoming = "UPCOMING",
+  Active = "ACTIVE"
 }
 
 
@@ -24,7 +24,7 @@ export type Filters = {
 
 
 export const enum Role {
-    Admin = "ADMIN",
-    User = "USER"
+  Admin = "ADMIN",
+  User = "USER"
 }
 

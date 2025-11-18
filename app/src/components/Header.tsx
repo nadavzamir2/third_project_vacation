@@ -4,15 +4,18 @@ import { Role } from "@/types";
 import { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const AdminNavButtons = ({pathName}: { pathName: string}) => (<>
+const AdminNavButtons = ({ pathName }: { pathName: string }) => (<>
   <Link to="/manage"> Manage</Link>
   <Link
     className={pathName === "/create" ? "active" : ""}
     to="/create"> Add
-  </Link></>
+  </Link>
+  <Link
+    className={pathName === "/metrics" ? "active" : ""}
+    to="/metrics">Metrics</Link></>
 );
 
-const LoginLink = ({pathName}: { pathName: string}) => {
+const LoginLink = ({ pathName }: { pathName: string }) => {
   return (
     <Link
       className={pathName === "/login" ? "active" : ""}
@@ -22,7 +25,7 @@ const LoginLink = ({pathName}: { pathName: string}) => {
     </Link>)
 }
 
-const RegisterLink = ({pathName}: { pathName: string}) => {
+const RegisterLink = ({ pathName }: { pathName: string }) => {
   return (<Link
     className={pathName === "/register" ? "active" : ""}
     to="/register"

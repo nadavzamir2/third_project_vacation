@@ -14,7 +14,7 @@ export const VacationsPage = () => {
         <h1>Vacations!!!</h1>
         <ul>
             {vacations.map(vacation => (
-                <VacationCard key={vacation.id} vacation={vacation} />
+                <VacationCard key={vacation.id} vacation={vacation} managedMode={false} />
             ))}
         </ul>
         </div>;
