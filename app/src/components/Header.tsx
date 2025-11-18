@@ -1,17 +1,60 @@
 import { useUser } from "@/context/user.context";
 import { isAuthenticated, logout } from "@/services/auth";
+import { Role } from "@/types";
 import { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+const AdminNavButtons = ({pathName}: { pathName: string}) => (<>
+  <Link to="/manage"> Manage</Link>
+  <Link
+    className={pathName === "/create" ? "active" : ""}
+    to="/create"> Add
+  </Link></>
+);
+
+const LoginLink = ({pathName}: { pathName: string}) => {
+  return (
+    <Link
+      className={pathName === "/login" ? "active" : ""}
+      to="/login"
+    >
+      Login
+    </Link>)
+}
+
+const RegisterLink = ({pathName}: { pathName: string}) => {
+  return (<Link
+    className={pathName === "/register" ? "active" : ""}
+    to="/register"
+  >
+    Register
+  </Link>
+  )
+}
+
+const Actions = ({ authed, onLogout }: { authed: boolean; onLogout: () => void }) => (
+  <div className="actions">
+    {authed ? (
+      <button className="btn btn-ghost" onClick={onLogout}>
+        Logout
+      </button>
+    ) : (
+      <span className="hint">Welcome</span>
+    )}
+  </div>
+);
+
 export default function Header() {
-  const { firstName, email } = useUser();
+  const { firstName, role } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const authed = isAuthenticated();
   const onLogout = () => {
     logout();
     navigate("/login");
-  };
+  }
+
+
 
   return (
     <header className="header">
@@ -23,39 +66,21 @@ export default function Header() {
       </div>
 
       <nav className="nav">
-        <Link to="/manage"> {firstName}</Link>
-        <Link
-          className={location.pathname === "/create" ? "active" : ""}
-          to="/create"
-        >
-          Add
-        </Link>
-        {!authed && (
+        {!authed ? (
           <>
-            <Link
-              className={location.pathname === "/login" ? "active" : ""}
-              to="/login"
-            >
-              Login
-            </Link>
-            <Link
-              className={location.pathname === "/register" ? "active" : ""}
-              to="/register"
-            >
-              Register
-            </Link>
+            <LoginLink pathName={location.pathname} />
+            <RegisterLink pathName={location.pathname} />
           </>
-        )}
+        ) : (<>
+          <span className="greeting"> Hello {firstName}! </span>
+          {
+            role === Role.Admin && (
+              <AdminNavButtons pathName={location.pathname} />
+            )
+          }
+        </>)}
       </nav>
-      <div className="actions">
-        {authed ? (
-          <button className="btn btn-ghost" onClick={onLogout}>
-            Logout
-          </button>
-        ) : (
-          <span className="hint">Welcome</span>
-        )}
-      </div>
+      <Actions authed={authed} onLogout={onLogout} />
     </header>
   );
 }

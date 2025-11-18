@@ -6,6 +6,7 @@
   --accent: #00e1ff;
   --accent2: #00ff85;
   --danger: #ff4d6d;
+  --secondary: #d2f200;
   --ring: 0 0 0 2px rgba(0, 225, 255, 0.35);
 }
 * {
@@ -94,6 +95,15 @@ a {
   color: var(--text);
   border: 1px solid transparent;
 }
+
+.nav .greeting {
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: var(--secondary);
+  border: 1px solid transparent;
+}
+
 .nav a:hover {
   border-color: #16304d;
   background: #0f1b2f;

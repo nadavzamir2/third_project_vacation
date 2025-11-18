@@ -50,8 +50,8 @@ export const AddVacationPage = () => {
     <div className="add-vacation-page">
       <h1>Add Vacation: {destination}</h1>
       <form onSubmit={onSubmit}>
-        <label>Deatination
-          <input type="text" value={destination} onChange={(e) => { onDestinationChange(e.target.value) }}></input>
+        <label>Destination
+          <input type="text" value={destination} onChange={(e) => { onDestinationChange(e.target.value) }} required></input>
         </label>
         {destinationError && (<div>{destinationError}</div>)}
         <label>Description
