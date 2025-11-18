@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { noForeignLetters } from "@/utils/latinLetters";
 
 export const useEmailField = (initialValue: string) => {
     const [email, setEmail] = useState(initialValue);
@@ -9,6 +10,9 @@ export const useEmailField = (initialValue: string) => {
         if (!isDirty) { 
             setEmailError(null); 
             return;
+        }
+        if (!noForeignLetters(email)) {
+            setEmailError("Email cannot contain foreign letters");
         }
         if (email.length > 30) {
             setEmailError("Email length cannot exceed 30 characters");

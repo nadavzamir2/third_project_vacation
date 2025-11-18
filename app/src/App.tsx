@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import RegisterPage from "./pages/RegisterPage";
 import { UserProvider } from "./context/user.context";
 import MainLayout from "./components/MainLayout";
+import RegisterPage from "./pages/RegisterPage";
 
 export default function App() {
   return (

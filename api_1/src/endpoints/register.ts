@@ -62,7 +62,14 @@ export const registerEndpoint = async (req: Request, res: Response) => {
             password
         });
         if (result) {
-            return res.status(200).send("Successful Registration");
+            return res.status(200).json({
+                user: {
+                    email,
+                    firstName,
+                    lastName,
+                    role: 'USER'
+                }
+            });
         } else {
             return res.status(500).send("Internal Server Error");
         }

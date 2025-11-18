@@ -10,8 +10,16 @@ export const logout = () => {
   localStorage.removeItem("user");
 }
 
-export const createUser = () => {
-  throw new Error("Registration is currently disabled");
+export const createUser = async ({ firstName, lastName, email, password }: { firstName: string, lastName: string, email: string, password: string }) => {
+  try {
+     const result = await api.post("/register", { firstName, lastName, email, password });
+      return result.data.user;
+  }
+  catch{
+    throw new Error("User creation failed");
+  }
+  
+
 }
 
 export const loginUser = async ({ email, password }: { email: string, password: string }) => {

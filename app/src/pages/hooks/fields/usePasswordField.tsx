@@ -11,7 +11,9 @@ export const usePasswordField = (initialValue: string) => {
             setPasswordError(null); 
             return;
         }
-        if (password.length < 5) {
+        if (!noForeignLetters(password)) {
+            setPasswordError("Password must contain only Latin letters");
+        } else if (password.length < 5) {
             setPasswordError("Password length must be at least 5 characters");
         
         } else if (password.length > 20) {
