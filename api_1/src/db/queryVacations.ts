@@ -33,7 +33,7 @@ const getFollowedCondition = (onlyFollowed: boolean) => {
 
 const getQuerySql = (filterDate: FilterDate, onlyFollowed: boolean, offset: string) => {
     return `SELECT 
-    v.id, v.destination, v.description, v.start_date, v.end_date, v.image, c.count, COUNT(*) OVER() as total 
+    v.id, v.destination, v.description, v.start_date, v.end_date, v.price, v.image, c.count, COUNT(*) OVER() as total 
     FROM northwind.vacations as v
     ${getFollowedCondition(onlyFollowed)}
     LEFT JOIN 

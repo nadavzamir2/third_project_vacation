@@ -2,15 +2,84 @@ import { deleteVacation } from "@/services/deleteVacation";
 import { Vacation } from "@/types";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import * as React from "react";
 
-export const VacationCard = ({ vacation, managedMode, onDelete }: { vacation: Vacation; managedMode: boolean; onDelete?: (id: number) => void }) => {
-    const [counter, setCount] = useState(vacation.count);
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (counter > 10) {
-            navigate("/edit/" + vacation.id, { replace: true });
+import Button from "@mui/joy/Button";
+import Modal from "@mui/joy/Modal";
+import ModalClose from "@mui/joy/ModalClose";
+import Typography from "@mui/joy/Typography";
+import Sheet from "@mui/joy/Sheet";
+
+type DeleteModalProps = {
+    open: boolean;
+    onClose: () => void;
+    onConfirm: () => void;
+    destination: string;
+};
+
+const DeleteModal: React.FC<DeleteModalProps> = ({ open, onClose, onConfirm, destination }) => {
+    return (
+
+        <Modal
+            open={open}
+            onClose={onClose}
+            sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        >
+            <Sheet
+                variant="outlined"
+                sx={{ maxWidth: 500, borderRadius: "md", p: 3, boxShadow: "lg" }}
+            >
+                <ModalClose variant="plain" sx={{ m: 1 }} onClick={onClose} />
+
+                <Typography
+                    component="h2"
+                    level="h4"
+                    textColor="inherit"
+                    sx={{ fontWeight: "lg", mb: 1 }}
+                >
+                    Delete {destination} vacation?
+                </Typography>
+
+                <Typography id="modal-desc" textColor="text.tertiary" sx={{ mb: 2 }}>
+                    This action cannot be undone.
+                </Typography>
+
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                    <Button variant="outlined" color="neutral" onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button color="danger" onClick={onConfirm}>
+                        Delete
+                    </Button>
+                </div>
+            </Sheet>
+        </Modal>
+
+    );
+};
+
+export const VacationCard = ({
+    vacation,
+    managedMode,
+    onDelete,
+}: {
+    vacation: Vacation;
+    managedMode: boolean;
+    onDelete?: (id: number) => void;
+}) => {
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
+    const handleConfirmDelete = async () => {
+        try {
+            await deleteVacation(vacation.id);
+            setOpenDeleteModal(false);
+            onDelete?.(vacation.id);
+        } catch (error) {
+            console.error('Error deleting vacation:', error);
+            setOpenDeleteModal(false);
         }
-    }, [counter]);
+    };
+
     return (
         <div>
             <h2>Vacation Card</h2>
@@ -18,13 +87,29 @@ export const VacationCard = ({ vacation, managedMode, onDelete }: { vacation: Va
             <p>Price: {vacation.price}</p>
             <p>Start Date: {vacation.startDate}</p>
             <p>End Date: {vacation.endDate}</p>
-            <p>Followers: {counter}</p>
-            {managedMode ? (<>
-            <Link to={`/edit/${vacation.id}`}>Edit</Link>
-            <button onClick={() => onDelete?.(vacation.id)}>Delete</button>
-            </>)
-                : (<button onClick={() => setCount(counter + 1)}>({counter}) Followers</button>)}
+            <p>Followers: {vacation.count}</p>
 
+            {managedMode ? (
+                <>
+                    <Button size="sm" component={Link} to={`/edit/${vacation.id}`}>Edit</Button>
+                    {" "}
+                    <Button size="sm" color="danger" onClick={() => setOpenDeleteModal(true)}>Delete</Button>
+
+                    { }
+                    <DeleteModal
+                        open={openDeleteModal}
+                        onClose={() => setOpenDeleteModal(false)}
+                        onConfirm={handleConfirmDelete}
+                        destination={vacation.destination}
+                    />
+                </>
+            ) : (
+                <button >
+                    ({vacation.count}) Followers
+                </button>
+            )}
         </div>
     );
-}
+};
+
+export default VacationCard;
