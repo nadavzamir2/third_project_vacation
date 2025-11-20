@@ -6,22 +6,28 @@ import Box from "@mui/joy/Box";
 import Radio from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import { FilterDate, Filters } from "@/types";
-
-
+import { Switch, Typography } from "@mui/joy";
 
 export const VacationsPage = () => {
     const [vacations, setVacations] = useState<Array<Vacation>>([]);
     const [filter, setFilter] = useState<FilterDate>(FilterDate.All);
+    const [onlyFollowed, setOnlyFollowed] = useState(true);
     useEffect(() => {
-        queryVacations({date: filter}).then(response => {
+        queryVacations({ onlyFollowed ,filterDate: filter }).then(response => {
             setVacations(response.list);
         });
-    }, [filter]);
+    }, [filter, onlyFollowed]);
 
     return <div>
         <h1>Vacations!!!</h1>
 
         <Box sx={{ mb: 3 }}>
+
+            <Typography component="label" endDecorator={
+                <Switch checked={onlyFollowed} onChange={(e) => setOnlyFollowed(e.target.checked)}  sx={{ ml: 1 }} />
+                }>
+                Is followed By user
+            </Typography>
             <RadioGroup
                 value={filter}
                 onChange={(e) => setFilter(e.target.value as FilterDate)}

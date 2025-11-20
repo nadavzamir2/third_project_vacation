@@ -18,8 +18,8 @@ export const enum FilterDate {
 
 
 export type Filters = {
-  followedOnly?: boolean;
-  date?: FilterDate;
+  onlyFollowed?: boolean;
+  filterDate?: FilterDate;
 };
 
 

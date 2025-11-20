@@ -6,7 +6,7 @@ type QueryVacationResponse = {
   total: number;
 }
 
-export const queryVacations = async ({followedOnly = false, date = FilterDate.All}: Filters = {}) => {
-  const result = await api.post("/vacations", { followedOnly, filterDate: date, limit: 20, offset: 0, currentPage: 0 });
+export const queryVacations = async ({onlyFollowed = false, filterDate = FilterDate.All}: Filters = {}) => {
+  const result = await api.post("/vacations", { onlyFollowed, filterDate, limit: 20, offset: 0, currentPage: 0 });
   return result.data as QueryVacationResponse;
 }
