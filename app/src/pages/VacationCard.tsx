@@ -9,6 +9,8 @@ import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
 import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
+import { unfollowVacation } from "@/services/unfollowVacation";
+import { followVacation } from "@/services/followVacation";
 
 type DeleteModalProps = {
     open: boolean;
@@ -58,14 +60,32 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ open, onClose, onConfirm, des
     );
 };
 
+const FollowButtons = ({ vacation, invalidateData }: { vacation: Vacation; invalidateData: () => void }) => {
+    console.log('FollowButtons', vacation)
+    if (vacation.isFollowedByUser) {
+        return (<div>
+            <Button onClick={async (e) => {
+                await unfollowVacation(vacation.id)
+                invalidateData();
+            }}>Unfollow</Button>
+        </div>)
+    } else {
+        return (<div>
+        <Button onClick={async (e) => {
+            await followVacation(vacation.id)
+            invalidateData();
+        }}>Follow</Button></div>)
+    }
+}
+
 export const VacationCard = ({
     vacation,
     managedMode,
-    onDelete,
+    invalidateData,
 }: {
     vacation: Vacation;
     managedMode: boolean;
-    onDelete?: (id: number) => void;
+    invalidateData: () => void;
 }) => {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
@@ -73,7 +93,7 @@ export const VacationCard = ({
         try {
             await deleteVacation(vacation.id);
             setOpenDeleteModal(false);
-            onDelete?.(vacation.id);
+            invalidateData?.();
         } catch (error) {
             console.error('Error deleting vacation:', error);
             setOpenDeleteModal(false);
@@ -104,9 +124,7 @@ export const VacationCard = ({
                     />
                 </>
             ) : (
-                <button >
-                    ({vacation.count}) Followers
-                </button>
+                <FollowButtons vacation={vacation} invalidateData={invalidateData} />
             )}
         </div>
     );

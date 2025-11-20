@@ -12,11 +12,17 @@ export const VacationsPage = () => {
     const [vacations, setVacations] = useState<Array<Vacation>>([]);
     const [filter, setFilter] = useState<FilterDate>(FilterDate.All);
     const [onlyFollowed, setOnlyFollowed] = useState(true);
+    const [invalidationCounter, setInvalidationCounter] = useState(0);
+
+    const invalidateData = () => {
+        setInvalidationCounter(prev => prev + 1);
+    }
+
     useEffect(() => {
         queryVacations({ onlyFollowed ,filterDate: filter }).then(response => {
             setVacations(response.list);
         });
-    }, [filter, onlyFollowed]);
+    }, [filter, onlyFollowed, invalidationCounter]);
 
     return <div>
         <h1>Vacations!!!</h1>
@@ -41,7 +47,7 @@ export const VacationsPage = () => {
 
         <ul>
             {vacations.map(vacation => (
-                <VacationCard key={vacation.id} vacation={vacation} managedMode={false} />
+                <VacationCard key={vacation.id} vacation={vacation} managedMode={false} invalidateData={invalidateData}/>
             ))}
         </ul>
     </div>;

@@ -7,6 +7,7 @@ export type Vacation = {
   image: string;
   price: number;
   count: number;
+  isFollowedByUser: boolean;
 }
 
 export const enum FilterDate {

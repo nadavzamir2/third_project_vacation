@@ -12,7 +12,7 @@ export const ManageVacationsPage = () => {
         });
     }, [invalidationCounter]);
 
-    const onDelete = async (id: number) => {
+    const invalidateData = () => {
         setInvalidationCounter(prev => prev + 1);
     }
 
@@ -20,7 +20,7 @@ export const ManageVacationsPage = () => {
         <h1>Manage Vacations</h1>
         <ul>
             {vacations.map(vacation => (
-                <VacationCard key={vacation.id} vacation={vacation} managedMode={true} onDelete={onDelete} />
+                <VacationCard key={vacation.id} vacation={vacation} managedMode={true} invalidateData={invalidateData} />
             ))}
         </ul>
     </div>;
