@@ -1,5 +1,6 @@
 import { count } from "console";
 import { Vacation } from "./types";
+import { isFollow } from "./db/isFollow";
 
 export const toVacationDTO = (vacation: Vacation) => {
     return {
@@ -13,15 +14,16 @@ export const toVacationDTO = (vacation: Vacation) => {
     };
 }
 
-export const fromVacationDTO = (dto: any) => {
+export const fromVacationDTO = (tableRow: any) => {
     return {
-        id: dto.id,
-        destination: dto.destination,
-        description: dto.description,
-        startDate: dto.start_date,
-        endDate: dto.end_date,
-        price: dto.price,
-        image: dto.image,
-        count: dto?.count,
+        id: tableRow.id,
+        destination: tableRow.destination,
+        description: tableRow.description,
+        startDate: tableRow.start_date,
+        endDate: tableRow.end_date,
+        price: tableRow.price,
+        image: tableRow.image,
+        count: tableRow?.count,
+        isFollowedByUser: tableRow.user_email !== null ? true : false
     };
 }

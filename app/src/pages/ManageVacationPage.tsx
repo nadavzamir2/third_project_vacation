@@ -1,13 +1,13 @@
 import { queryVacations } from "@/services/queryVacations";
 import { Vacation } from "@/types";
 import { useEffect, useState } from "react";
-import { VacationCard } from "./VacationCard";
+import { VacationCard } from "../components/VacationCard";
 
 export const ManageVacationsPage = () => {
     const [vacations, setVacations] = useState<Array<Vacation>>([]);
     const [invalidationCounter, setInvalidationCounter] = useState(0);
     useEffect(() => {
-        queryVacations().then(response => {
+        queryVacations(undefined, 1000, 0).then(response => {
             setVacations(response.list);
         });
     }, [invalidationCounter]);

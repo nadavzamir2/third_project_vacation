@@ -6,7 +6,7 @@ import { FilterDate } from "../types";
 export const queryVacations = async (limit: number, pageNumber: number, onlyFollowed: boolean, filterDate: FilterDate, email: string) => {
     const connection = await getConnection();
     const offset = String(limit * pageNumber);
-    const params = onlyFollowed ? [email, String(limit)] : [String(limit)];
+    const params = onlyFollowed ? [email, email, String(limit)] : [email, String(limit)];
     const [result]: any = await connection?.execute(getQuerySql(filterDate, onlyFollowed, offset), params);
     return result;
 }
@@ -33,9 +33,10 @@ const getFollowedCondition = (onlyFollowed: boolean) => {
 
 const getQuerySql = (filterDate: FilterDate, onlyFollowed: boolean, offset: string) => {
     return `SELECT 
-    v.id, v.destination, v.description, v.start_date, v.end_date, v.price, v.image, c.count, COUNT(*) OVER() as total 
+    v.id, v.destination, v.description, v.start_date, v.end_date, v.price, v.image, c.count, f3.user_email, COUNT(*) OVER() as total 
     FROM northwind.vacations as v
     ${getFollowedCondition(onlyFollowed)}
+    LEFT JOIN northwind.followers as f3 ON f3.vacation_id = v.id AND f3.user_email = ?
     LEFT JOIN 
     (
         SELECT f2.vacation_id, COUNT(f2.user_email) as count FROM northwind.followers as f2 GROUP BY f2.vacation_id
