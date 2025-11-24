@@ -37,7 +37,8 @@ export default function Login({ text }: { text?: string }) {
   return (
     <div className="login-page">
       <section className="login-card">
-        <h2>Login {text}</h2>
+        <h2>Login</h2>
+        {text && <p className="minotText">{text}</p>}
         <form className="form" onSubmit={onSubmit}>
           <label>
             Email
@@ -58,7 +59,7 @@ export default function Login({ text }: { text?: string }) {
             />
           </label>
           {error && <div className="error">{error}</div>}
-          <button className="btn" type="submit">
+          <button className="btn signin-btn" type="submit">
             Sign In
           </button>
         </form>

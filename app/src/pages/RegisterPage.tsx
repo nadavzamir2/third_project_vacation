@@ -38,7 +38,7 @@ export default function RegisterPage() {
 
   return (
     <div className="login-page">
-      <section className="login-card">
+      <section className="register-card">
         <h2>Register</h2>
         <form className="form" onSubmit={onSubmit}>
           <label>
@@ -83,7 +83,7 @@ export default function RegisterPage() {
             {passwordError && <div className="error">{passwordError}</div>}
           </label>
           {error && <div className="error">{error}</div>}
-          <button className="btn" type="submit" disabled={isDisabled} >
+          <button className="btn signin-btn" type="submit" disabled={isDisabled} >
             Create Account
           </button>
         </form>
