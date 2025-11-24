@@ -14,14 +14,14 @@ services:
 
   api-client:
     build: ./app
-    container_name: api-client
+    container_name: client
     restart: always
     ports:
       - "3001:3001"
 
   api:
     build: ./api_1
-    container_name: node-api
+    container_name: server
     restart: always
     volumes:
       - ./logs:/app/logs
@@ -39,6 +39,6 @@ services:
       DB_USER: root
       DB_PASSWORD: apppass
       NODE_ENV: development
-    command: npm run all # Use hot-reload in development
+    command: npm run all
     depends_on:
       - mysql

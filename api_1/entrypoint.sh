@@ -5,6 +5,14 @@
 
 set -e
 
+# Copy uploads directory from src to dist if it doesn't exist or needs updating
+echo "📁 Setting up uploads directory..."
+mkdir -p dist/uploads/images
+if [ -d "/src/uploads" ]; then
+  cp -r /src/uploads/* /dist/uploads/
+  echo "✅ Uploads directory synced"
+fi
+
 # Wait for MySQL (host:port from env or default)
 HOST=${DB_HOST:-mysql}
 PORT=${DB_PORT:-3306}

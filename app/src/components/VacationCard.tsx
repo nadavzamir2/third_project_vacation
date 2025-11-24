@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import EditIcon from '@mui/icons-material/Edit';
@@ -22,6 +23,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { unfollowVacation } from "@/services/unfollowVacation";
 import { followVacation } from "@/services/followVacation";
 import { DeleteModal } from "@/components/DeleteModal"
+import CardHeader from "@mui/material/CardHeader";
 
 
 
@@ -59,6 +61,27 @@ const FollowButtons = ({ vacation, invalidateData }: { vacation: Vacation; inval
 
 const PlaceholderImage = 'http://localhost:3000/images/placeholder.png';
 
+const ManagedModeActions = ({ vacation, setOpenDeleteModal }: { vacation: Vacation; setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>> }) => {
+    return (<><Button
+                            size="small"
+                            variant="contained"
+                            startIcon={<EditIcon />}
+                            component={Link}
+                            to={`/edit/${vacation.id}`}
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            size="small"
+                            variant="contained"
+                            color="error"
+                            startIcon={<DeleteIcon />}
+                            onClick={() => setOpenDeleteModal(true)}
+                        >
+                            Delete
+                        </Button></>)
+}
+
 export const VacationCard = ({
     vacation,
     managedMode,
@@ -69,6 +92,7 @@ export const VacationCard = ({
     invalidateData: () => void;
 }) => {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [imageSrc, setImageSrc] = useState(`${import.meta.env.VITE_API_BASE_URL}${vacation.image}` || PlaceholderImage);
 
     const handleConfirmDelete = async () => {
         try {
@@ -89,12 +113,31 @@ export const VacationCard = ({
             flexDirection: 'column',
             borderRadius: 3,
             boxShadow: 3,
-            marginBottom: 1
+            marginBottom: 1,
+            position: 'relative',
         }}>
+            <CardHeader
+                sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    color: "white",
+                    background: "rgba(0,0,0,0)", // dark transparent overlay
+                }}
+                action={
+          managedMode ? (
+          <ManagedModeActions vacation={vacation} setOpenDeleteModal={setOpenDeleteModal} />
+          ) : <FollowButtons vacation={vacation} invalidateData={invalidateData} />  
+        }
+            />
             <CardMedia
                 component="img"
                 height="200"
-                image={`${import.meta.env.VITE_API_BASE_URL}${vacation.image}` || PlaceholderImage}
+                image={imageSrc}
+                onError={() => {
+                    setImageSrc(PlaceholderImage);
+                }}
                 alt={vacation.destination}
             />
             <CardContent sx={{ flexGrow: 1 }}>
@@ -120,7 +163,7 @@ export const VacationCard = ({
                         </Typography>
                     </Box>
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1  }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <PeopleIcon fontSize="small" color="action" />
                         <Chip
                             label={`${vacation.count} followers`}
@@ -131,40 +174,6 @@ export const VacationCard = ({
                     </Box>
                 </Box>
             </CardContent>
-
-            <CardActions sx={{ justifyContent: 'space-between', px: 2, pb: 1 }}>
-                {managedMode ? (
-                    <>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            startIcon={<EditIcon />}
-                            component={Link}
-                            to={`/edit/${vacation.id}`}
-                        >
-                            Edit
-                        </Button>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            color="error"
-                            startIcon={<DeleteIcon />}
-                            onClick={() => setOpenDeleteModal(true)}
-                        >
-                            Delete
-                        </Button>
-
-                        <DeleteModal
-                            open={openDeleteModal}
-                            onClose={() => setOpenDeleteModal(false)}
-                            onConfirm={handleConfirmDelete}
-                            destination={vacation.destination}
-                        />
-                    </>
-                ) : (
-                    <FollowButtons vacation={vacation} invalidateData={invalidateData} />
-                )}
-            </CardActions>
         </Card>
     );
 };
