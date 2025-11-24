@@ -1,6 +1,4 @@
-import { count } from "console";
 import { Vacation } from "./types";
-import { isFollow } from "./db/isFollow";
 
 export const toVacationDTO = (vacation: Vacation) => {
     return {
@@ -10,7 +8,7 @@ export const toVacationDTO = (vacation: Vacation) => {
         start_date: vacation.startDate,
         end_date: vacation.endDate,
         price: vacation.price,
-        image: vacation.image
+        image: vacation.image.replace('/images/', ''),
     };
 }
 
@@ -22,7 +20,7 @@ export const fromVacationDTO = (tableRow: any) => {
         startDate: tableRow.start_date,
         endDate: tableRow.end_date,
         price: tableRow.price,
-        image: tableRow.image,
+        image: `/images/${tableRow.image}`,
         count: tableRow?.count,
         isFollowedByUser: tableRow.user_email !== null ? true : false
     };

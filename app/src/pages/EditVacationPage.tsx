@@ -94,7 +94,7 @@ export const EditVacationPage = () => {
                 <input type="text" value={image} onChange={(e) => { onImageChange(e.target.value) }}></input>
             </label>
             {imageError && (<div className="error">{imageError}</div>)}
-            <button type="submit" disabled={isDisabled}>Edit Vacation</button>
+            <button className="btn signin-btn" type="submit" disabled={isDisabled}>Edit Vacation</button>
         </form>
     </div>
     )

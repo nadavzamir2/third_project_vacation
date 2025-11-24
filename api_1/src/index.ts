@@ -14,14 +14,19 @@ import { getMetricsEndpoint as getMetricsEndpoint } from "./endpoints/get.metric
 import { verifyToken } from "./auth/verifyToken";
 import { onlyAdmin, onlyUser } from "./auth/verifyRoles";
 import cors from "cors";
+import path from "path";
 
 
 dotenv.config();
 const app = express();
+const imagesPath = path.join(__dirname, "uploads", "images");
+
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: "*" }));
 app.use(express.json());
+app.use("/images", express.static(imagesPath));
+
 
 app.get("/hello", (req, res, next) => {
     res.send("Hello World!");
@@ -42,6 +47,7 @@ app.listen(PORT, (err) => {
         console.log(`\x1b[31m${err.message}\x1b[0m`);
         logger.error(`Api is running on port ${PORT}!!!`);
     } else {
+        console.log("Serving images from:", imagesPath);
         logger.info(`Api is running on port ${PORT}!!!`);
         console.log(`Api is running on port ${PORT}`);
     }

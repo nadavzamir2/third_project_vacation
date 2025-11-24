@@ -47,35 +47,34 @@ export const AddVacationPage = () => {
   };
 
   return (
-    <div className="add-vacation-page">
+    <div>
       <h1>Add Vacation: {destination}</h1>
       <form onSubmit={onSubmit}>
         <label>Destination
           <input type="text" value={destination} onChange={(e) => { onDestinationChange(e.target.value) }} required></input>
         </label>
-        {destinationError && (<div>{destinationError}</div>)}
+        {destinationError && (<div className="error">{destinationError}</div>)}
         <label>Description
           <input type="text" value={description} onChange={(e) => {onDescriptionChange(e.target.value) }}></input>
         </label>
-        {descriptionError && (<div>{descriptionError}</div>)}
+        {descriptionError && (<div className="error">{descriptionError}</div>)}
         <label>Start Date
           <input type="date" value={startDate} onChange={(e) => { onStartDateChange(e.target.value) }}></input>
         </label>
-        {startDateError && (<div>{startDateError}</div>)}
+        {startDateError && (<div className="error">{startDateError}</div>)}
         <label>End Date
           <input type="date" value={endDate} onChange={(e) => { onEndDateChange(e.target.value) }}></input>
         </label>
-        {endDateError && (<div>{endDateError}</div>)}
+        {endDateError && (<div className="error">{endDateError}</div>)}
         <label>Price
           <input type="number" value={price} onChange={(e) => { onPriceChange(Number(e.target.value)) }}></input>
         </label>
-        {priceError && (<div>{priceError}</div>)}
+        {priceError && (<div className="error">{priceError}</div>)}
         <label>Image URL
           <input type="text" value={image} onChange={(e) => { onImageChange(e.target.value) }}></input>
         </label>
-        {imageError && (<div>{imageError}</div>)}
-
-        <button type="submit">Add Vacation</button>
+        {imageError && (<div className="error">{imageError}</div>)}
+        <button className="btn signin-btn" type="submit">Add Vacation</button>
       </form>
     </div>
   )

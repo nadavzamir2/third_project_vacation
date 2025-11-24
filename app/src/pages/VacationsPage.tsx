@@ -9,9 +9,11 @@ import { FilterDate } from "@/types";
 import { Switch, Typography } from "@mui/joy";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { useUser } from "@/context/user.context";
 
 export const VacationsPage = () => {
     const [vacations, setVacations] = useState<Array<Vacation>>([]);
+    const { firstName } = useUser();
     const [filter, setFilter] = useState<FilterDate>(FilterDate.All);
     const [onlyFollowed, setOnlyFollowed] = useState(false);
     const [invalidationCounter, setInvalidationCounter] = useState(0);
@@ -33,16 +35,9 @@ export const VacationsPage = () => {
 
     const numberOfpages = Math.ceil(total / limit);
     return <div>
-        <h1>Vacations!!!</h1>
-        <Stack  spacing={2}>
-            <Typography>Page: {currentPage}</Typography>
-            <Pagination color="primary" count={numberOfpages} page={currentPage+1} onChange={(e, page) => {
-                setCurrentPage(page-1);
-            }} />
-        </Stack>
+        <h1>{firstName}'s Vacations</h1>
 
-        <Box sx={{ mb: 3 }}>
-
+        <Box sx={{ mb: 3, border: '1px solid', borderColor: 'divider', p: 2, borderRadius: '8px', width: 'fit-content' }}>
             <Typography component="label" endDecorator={
                 <Switch checked={onlyFollowed} onChange={(e) => setOnlyFollowed(e.target.checked)} sx={{ ml: 1 }} />
             }>
@@ -57,6 +52,12 @@ export const VacationsPage = () => {
                 <Radio value={FilterDate.Upcoming} label="Only upcoming vacations" />
                 <Radio value={FilterDate.Active} label="Only active vacations" />
             </RadioGroup>
+            <Stack spacing={2}>
+                <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
+                    setCurrentPage(page - 1);
+                }} />
+            </Stack>
+
         </Box>
 
         <ul>
@@ -64,5 +65,8 @@ export const VacationsPage = () => {
                 <VacationCard key={vacation.id} vacation={vacation} managedMode={false} invalidateData={invalidateData} />
             ))}
         </ul>
+        <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
+            setCurrentPage(page - 1);
+        }} />
     </div>;
 }

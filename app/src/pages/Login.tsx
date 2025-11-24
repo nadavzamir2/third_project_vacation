@@ -3,7 +3,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { loginUser } from "@/services/auth";
 import { Role } from "@/types";
 
-export default function Login({ text }: { text?: string }) {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +38,6 @@ export default function Login({ text }: { text?: string }) {
     <div className="login-page">
       <section className="login-card">
         <h2>Login</h2>
-        {text && <p className="minotText">{text}</p>}
         <form className="form" onSubmit={onSubmit}>
           <label>
             Email

@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="/login" element={<Login text="Please log in" />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/*" element={<UserProvider><MainLayout /></UserProvider>} />
       </Routes>
