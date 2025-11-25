@@ -1,6 +1,6 @@
 import { queryVacations } from "@/services/queryVacations";
 import { Vacation } from "@/types";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { VacationCard } from "../components/VacationCard";
 import Box from "@mui/joy/Box";
 import Radio from "@mui/joy/Radio";
@@ -20,6 +20,21 @@ export const VacationsPage = () => {
     const [total, setTotal] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
     const limit = 2;
+
+    const resetPagination = () => {
+        setCurrentPage(0);
+    }
+
+    const onFilterChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        setFilter(e.target.value as FilterDate);
+        resetPagination();
+    }
+
+    const onOnlyFollowedChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+        setOnlyFollowed(e.target.checked);
+        resetPagination();
+    }
+
 
 
     const invalidateData = () => {
@@ -48,13 +63,13 @@ export const VacationsPage = () => {
             >
                 <Box sx={{ flex: 1, mb: 3, border: '1px solid', borderColor: 'divider', p: 2, borderRadius: '8px', width: 'fit-content' }}>
                     <Typography component="label" endDecorator={
-                        <Switch checked={onlyFollowed} onChange={(e) => setOnlyFollowed(e.target.checked)} sx={{ ml: 1, mb:5 }} />
+                        <Switch checked={onlyFollowed} onChange={onOnlyFollowedChange} sx={{ ml: 1, mb:5 }} />
                     }>
                         Is followed By user
                     </Typography>
                     <RadioGroup
                         value={filter}
-                        onChange={(e) => setFilter(e.target.value as FilterDate)}
+                        onChange={onFilterChange}
                     >
                         <Radio value={FilterDate.All} label="All vacations" />
                         <Radio value={FilterDate.Past} label="Only past vacations" />
