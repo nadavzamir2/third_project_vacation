@@ -36,37 +36,49 @@ export const VacationsPage = () => {
     const numberOfpages = Math.ceil(total / limit);
     return <div>
         <h1>{firstName}'s Vacations</h1>
-
-        <Box sx={{ mb: 3, border: '1px solid', borderColor: 'divider', p: 2, borderRadius: '8px', width: 'fit-content' }}>
-            <Typography component="label" endDecorator={
-                <Switch checked={onlyFollowed} onChange={(e) => setOnlyFollowed(e.target.checked)} sx={{ ml: 1 }} />
-            }>
-                Is followed By user
-            </Typography>
-            <RadioGroup
-                value={filter}
-                onChange={(e) => setFilter(e.target.value as FilterDate)}
+        <div>
+            <Stack
+                direction="row"
+                spacing={4}
+                sx={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                }}
             >
-                <Radio value={FilterDate.All} label="All vacations" />
-                <Radio value={FilterDate.Past} label="Only past vacations" />
-                <Radio value={FilterDate.Upcoming} label="Only upcoming vacations" />
-                <Radio value={FilterDate.Active} label="Only active vacations" />
-            </RadioGroup>
-            <Stack spacing={2}>
-                <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
-                    setCurrentPage(page - 1);
-                }} />
+                <Box sx={{ flex: 1, mb: 3, border: '1px solid', borderColor: 'divider', p: 2, borderRadius: '8px', width: 'fit-content' }}>
+                    <Typography component="label" endDecorator={
+                        <Switch checked={onlyFollowed} onChange={(e) => setOnlyFollowed(e.target.checked)} sx={{ ml: 1, mb:5 }} />
+                    }>
+                        Is followed By user
+                    </Typography>
+                    <RadioGroup
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value as FilterDate)}
+                    >
+                        <Radio value={FilterDate.All} label="All vacations" />
+                        <Radio value={FilterDate.Past} label="Only past vacations" />
+                        <Radio value={FilterDate.Upcoming} label="Only upcoming vacations" />
+                        <Radio value={FilterDate.Active} label="Only active vacations" />
+                    </RadioGroup>
+                   
+
+                </Box>
+                <Box
+                    sx={{ flex: 4, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 1, mb: 1 }}
+                >
+                    {vacations.map(vacation => (
+                        <VacationCard key={vacation.id} vacation={vacation} managedMode={false} invalidateData={invalidateData} />
+                    ))}
+                     <Stack marginTop={6} spacing={2}>
+                        <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
+                            setCurrentPage(page - 1);
+                        }} />
+                    </Stack>
+                </Box>
+
             </Stack>
+        </div>
 
-        </Box>
-
-        <ul>
-            {vacations.map(vacation => (
-                <VacationCard key={vacation.id} vacation={vacation} managedMode={false} invalidateData={invalidateData} />
-            ))}
-        </ul>
-        <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
-            setCurrentPage(page - 1);
-        }} />
     </div>;
 }
