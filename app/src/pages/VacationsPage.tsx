@@ -67,16 +67,19 @@ export const VacationsPage = () => {
                     }>
                         Is followed By user
                     </Typography>
+                    <Typography component="label" endDecorator={
                     <RadioGroup
                         value={filter}
                         onChange={onFilterChange}
                     >
-                        <Radio value={FilterDate.All} label="All vacations" />
-                        <Radio value={FilterDate.Past} label="Only past vacations" />
-                        <Radio value={FilterDate.Upcoming} label="Only upcoming vacations" />
-                        <Radio value={FilterDate.Active} label="Only active vacations" />
+                        <Radio value={FilterDate.All} label="All" />
+                        <Radio value={FilterDate.Past} label="Past vacations" />
+                        <Radio value={FilterDate.Upcoming} label="Upcoming vacations" />
+                        <Radio value={FilterDate.Active} label="Active vacations" />
                     </RadioGroup>
-                   
+                    }>
+                        Filter by date
+                    </Typography>
 
                 </Box>
                 <Box
