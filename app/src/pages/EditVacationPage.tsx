@@ -10,6 +10,7 @@ import { usePriceField } from "./hooks/fields/usePriceField";
 import { useImageField } from "./hooks/fields/useImageField";
 import { getVacationById } from "@/services/getVacationById";
 import { Vacation } from "@/types";
+import { ImageInput } from "@/components/ImageInput";
 
 export const EditVacationPage = () => {
     const [vacation, setVacation] = useState<Vacation | null>(null);
@@ -20,7 +21,7 @@ export const EditVacationPage = () => {
     const { startDate, onStartDateChange, startDateError } = useStartDateField("");
     const { endDate, onEndDateChange, endDateError } = useEndDateField("");
     const { price, onPriceChange, priceError } = usePriceField(0);
-    const { image, onImageChange, imageError } = useImageField("");
+    const { image, onImageChange, imageError, setImageError } = useImageField("");
     const isDisabled = destinationError || descriptionError || startDateError || endDateError || priceError || imageError ? true : false;
 
     const navigate = useNavigate();
@@ -29,26 +30,26 @@ export const EditVacationPage = () => {
         return `${day}-${month}-${year}`;
     }
 
-    
-      const onSubmit = async (e: React.FormEvent) => {
+
+    const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (isDisabled) {
-          return;
+            return;
         }
         try {
-          const result = await updateVacation(Number(id), {
-            destination,
-            description,
-            startDate: correctFormatDate(startDate),
-            endDate: correctFormatDate(endDate),
-            price,
-            image,
-          });
-          navigate({ pathname: "/manage" });
+            const result = await updateVacation(Number(id), {
+                destination,
+                description,
+                startDate: correctFormatDate(startDate),
+                endDate: correctFormatDate(endDate),
+                price,
+                image: image!,
+            });
+            navigate({ pathname: "/manage" });
         } catch (err) {
-          console.error("Failed to update vacation", err);
+            console.error("Failed to update vacation", err);
         }
-      };
+    };
 
     useEffect(() => {
         if (id) {
@@ -90,10 +91,7 @@ export const EditVacationPage = () => {
                 <input type="number" value={price} onChange={(e) => { onPriceChange(Number(e.target.value)) }}></input>
             </label>
             {priceError && (<div className="error">{priceError}</div>)}
-            <label>Image URL
-                <input type="text" value={image} onChange={(e) => { onImageChange(e.target.value) }}></input>
-            </label>
-            {imageError && (<div className="error">{imageError}</div>)}
+            <ImageInput imageFileName={image} imageError={imageError} setImageError={setImageError} setImageFileName={onImageChange}/>
             <button className="btn signin-btn" type="submit" disabled={isDisabled}>Edit Vacation</button>
         </form>
     </div>

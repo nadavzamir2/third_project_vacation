@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useDestinationField } from "./hooks/fields/useDestinationField";
 import { createVacation } from "@/services/createVacation";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +6,7 @@ import { useStartDateField } from "./hooks/fields/useStartDateField";
 import { useEndDateField } from "./hooks/fields/useEndDateField";
 import { usePriceField } from "./hooks/fields/usePriceField";
 import { useImageField } from "./hooks/fields/useImageField";
+import { ImageInput } from "@/components/ImageInput";
 
 
 
@@ -16,7 +16,7 @@ export const AddVacationPage = () => {
   const { startDate, onStartDateChange, startDateError } = useStartDateField("");
   const { endDate, onEndDateChange, endDateError } = useEndDateField("");
   const { price, onPriceChange, priceError } = usePriceField(0);
-  const { image, onImageChange, imageError } = useImageField("");
+  const { image, onImageChange, imageError, setImageError } = useImageField("");
 
   const navigate = useNavigate();
   const correctFormatDate = (date: string) => {
@@ -38,7 +38,7 @@ export const AddVacationPage = () => {
         startDate: correctFormatDate(startDate),
         endDate: correctFormatDate(endDate),
         price,
-        image,
+        image: image!,
       });
       navigate({ pathname: "/manage" });
     } catch (err) {
@@ -70,10 +70,7 @@ export const AddVacationPage = () => {
           <input type="number" value={price} onChange={(e) => { onPriceChange(Number(e.target.value)) }}></input>
         </label>
         {priceError && (<div className="error">{priceError}</div>)}
-        <label>Image URL
-          <input type="text" value={image} onChange={(e) => { onImageChange(e.target.value) }}></input>
-        </label>
-        {imageError && (<div className="error">{imageError}</div>)}
+        <ImageInput imageFileName={image} imageError={imageError} setImageError={setImageError} setImageFileName={onImageChange}/>
         <button className="btn signin-btn" type="submit">Add Vacation</button>
       </form>
     </div>

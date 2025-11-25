@@ -32,7 +32,6 @@ export const postVacationEndpoint = async (req: Request, res: Response) => {
         return res.status(400).send("Price must be greater than zero");
     }
 
-    // Convert dates for comparison
     const startDateMySQL = convertDDMMYYYYtoYYYYMMDD(startDate);
     const endDateMySQL = convertDDMMYYYYtoYYYYMMDD(endDate);
 
@@ -81,7 +80,7 @@ export const postVacationEndpoint = async (req: Request, res: Response) => {
         startDate: new Date(startDateMySQL),
         endDate: new Date(endDateMySQL),
         price: price,
-        image: image
+        image: image.replace("images/", ""),
     });
 
     res.send({ vacation: newVacation });

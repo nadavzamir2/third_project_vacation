@@ -15,6 +15,7 @@ import { verifyToken } from "./auth/verifyToken";
 import { onlyAdmin, onlyUser } from "./auth/verifyRoles";
 import cors from "cors";
 import path from "path";
+import { uploadImageEndpoint } from "./endpoints/uploadImageEndpoint";
 
 
 dotenv.config();
@@ -41,6 +42,7 @@ app.post("/vacations", verifyToken, postQueryVacationsEndpoint);
 app.post("/register", registerEndpoint);
 app.post("/login", postLoginEndpoint);
 app.get("/metrics", verifyToken, onlyAdmin, getMetricsEndpoint);
+app.post("/upload-image", verifyToken, onlyAdmin, uploadImageEndpoint);
 
 app.listen(PORT, (err) => {
     if (err) {

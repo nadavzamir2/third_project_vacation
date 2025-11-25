@@ -93,7 +93,7 @@ export const putVacationEndpoint = async (req: Request, res: Response, next: Nex
         startDate: new Date(startDateMySQL),
         endDate: new Date(endDateMySQL),
         price,
-        image
+        image: image.replace("images/", ""),
     });
 
     if (!updated) {
