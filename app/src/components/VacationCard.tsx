@@ -19,6 +19,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PeopleIcon from '@mui/icons-material/People';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { unfollowVacation } from "@/services/unfollowVacation";
 import { followVacation } from "@/services/followVacation";
@@ -62,24 +63,31 @@ const FollowButtons = ({ vacation, invalidateData }: { vacation: Vacation; inval
 const PlaceholderImage = 'http://localhost:3000/images/placeholder.png';
 
 const ManagedModeActions = ({ vacation, setOpenDeleteModal }: { vacation: Vacation; setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>> }) => {
-    return (<><Button
-                            size="small"
-                            variant="contained"
-                            startIcon={<EditIcon />}
-                            component={Link}
-                            to={`/edit/${vacation.id}`}
-                        >
-                            Edit
-                        </Button>
-                        <Button
-                            size="small"
-                            variant="contained"
-                            color="error"
-                            startIcon={<DeleteIcon />}
-                            onClick={() => setOpenDeleteModal(true)}
-                        >
-                            Delete
-                        </Button></>)
+    return (
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+            <Button
+                size="small"
+                variant="contained"
+                startIcon={<EditIcon fontSize="small" />}
+                component={Link}
+                color="info"
+                to={`/edit/${vacation.id}`}
+                sx={{ fontWeight: 'bold', fontSize: '0.7rem', padding: '4px 8px' }}
+            >
+                Edit
+            </Button>
+            <Button
+                size="small"
+                variant="contained"
+                color="error"
+                startIcon={<DeleteIcon fontSize="small" />}
+                onClick={() => setOpenDeleteModal(true)}
+                sx={{ fontWeight: 'bold', fontSize: '0.7rem', padding: '4px 8px' }}
+            >
+                Delete
+            </Button>
+        </Box>
+    )
 }
 
 export const VacationCard = ({
@@ -121,15 +129,21 @@ export const VacationCard = ({
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    width: "100%",
+                    right: 0,
                     color: "white",
-                    background: "rgba(0,0,0,0)", // dark transparent overlay
+                    background: "rgba(0,0,0,0)",
+                    p: 1,
+                    '& .MuiCardHeader-action': {
+                        margin: 0,
+                        alignSelf: 'stretch',
+                        width: '100%'
+                    }
                 }}
                 action={
-          managedMode ? (
-          <ManagedModeActions vacation={vacation} setOpenDeleteModal={setOpenDeleteModal} />
-          ) : <FollowButtons vacation={vacation} invalidateData={invalidateData} />  
-        }
+                    managedMode ? (
+                        <ManagedModeActions vacation={vacation} setOpenDeleteModal={setOpenDeleteModal} />
+                    ) : <FollowButtons vacation={vacation} invalidateData={invalidateData} />
+                }
             />
             <CardMedia
                 component="img"
@@ -150,21 +164,21 @@ export const VacationCard = ({
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <CalendarTodayIcon fontSize="small" color="action" />
-                        <Typography variant="body2" color="text.secondary">
-                            {new Date(vacation.startDate).toLocaleDateString()} - {new Date(vacation.endDate).toLocaleDateString()}
+                        <CalendarMonthIcon fontSize="small" color="primary" />
+                        <Typography variant="body1" color="text.secondary">
+                            {new Date(vacation.startDate).toLocaleDateString('en-GB')} - {new Date(vacation.endDate).toLocaleDateString('en-GB')}
                         </Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <AttachMoneyIcon fontSize="small" color="action" />
-                        <Typography variant="body2" color="text.secondary">
+                        <AttachMoneyIcon fontSize="small" color="info" />
+                        <Typography variant="body1" color="text.secondary">
                             ${vacation.price}
                         </Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <PeopleIcon fontSize="small" color="action" />
+                        <PeopleIcon fontSize="small" color="primary" />
                         <Chip
                             label={`${vacation.count} followers`}
                             size="small"
@@ -174,6 +188,14 @@ export const VacationCard = ({
                     </Box>
                 </Box>
             </CardContent>
+
+            <DeleteModal
+
+                open={openDeleteModal}
+                onClose={() => setOpenDeleteModal(false)}
+                onConfirm={handleConfirmDelete}
+                destination={vacation.destination}
+            />
         </Card>
     );
 };

@@ -64,8 +64,13 @@ export const ImageInput = ({ imageFileName: uploadedFileName, setImageFileName: 
                 }}></input>
             </label>
             {
-                uploadedFileName === null ? <button disabled={isDisabled} className="btn" onClick={onUploadClick}> Upload</button> :
-                    <button className="btn" onClick={onChangeFileClick}>Change</button>
+                uploadedFileName === null ?
+                    <button disabled={isDisabled} className="btn upload-btn" onClick={onUploadClick}>
+                        📤 Upload
+                    </button> :
+                    <button className="btn change-btn" onClick={onChangeFileClick}>
+                        🔄 Change Image
+                    </button>
             }
 
             {uploadError && (<div className="error">{uploadError}</div>)}

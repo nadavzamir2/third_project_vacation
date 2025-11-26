@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { VacationCard } from "../components/VacationCard";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
 
 
 export const ManageVacationsPage = () => {
@@ -20,9 +22,12 @@ export const ManageVacationsPage = () => {
     }
 
     return (
-        <Container maxWidth="xl" sx={{ py: 0 }}>
+        <Container maxWidth="xl" sx={{ py: 1 }}>
             <h1 id="manage-vacations">Manage Vacations</h1>
-            <Grid container spacing={3}>
+            <Typography variant="subtitle1" color="text.secondary" sx={{ textAlign: 'center', mb: 5 }}>
+                <Chip label={`Total: ${vacations.length}`} color="info" variant="outlined" />
+            </Typography>
+            <Grid container spacing={5} justifyContent="center">
                 {vacations.map(vacation => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={vacation.id}>
                         <VacationCard vacation={vacation} managedMode={true} invalidateData={invalidateData} />

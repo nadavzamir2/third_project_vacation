@@ -22,28 +22,28 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({ open, onClose, onConfi
         >
             <Sheet
                 variant="outlined"
-                sx={{ maxWidth: 500, borderRadius: "md", p: 3, boxShadow: "lg" }}
+                sx={{ maxWidth: 600, minWidth: 400, borderRadius: "md", p: 4, boxShadow: "lg" }}
             >
                 <ModalClose variant="plain" sx={{ m: 1 }} onClick={onClose} />
 
                 <Typography
                     component="h2"
-                    level="h4"
+                    level="h3"
                     textColor="inherit"
-                    sx={{ fontWeight: "lg", mb: 1 }}
+                    sx={{ fontWeight: "lg", mb: 2 }}
                 >
                     Delete {destination} vacation?
                 </Typography>
 
-                <Typography id="modal-desc" textColor="text.tertiary" sx={{ mb: 2 }}>
+                <Typography id="modal-desc" textColor="text.tertiary" sx={{ mb: 3, fontSize: "1.1rem" }}>
                     This action cannot be undone.
                 </Typography>
 
-                <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
-                    <Button variant="outlined" color="neutral" onClick={onClose}>
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px" }}>
+                    <Button variant="outlined" color="neutral" onClick={onClose} size="lg">
                         Cancel
                     </Button>
-                    <Button color="danger" onClick={onConfirm}>
+                    <Button color="danger" onClick={onConfirm} size="lg">
                         Delete
                     </Button>
                 </div>

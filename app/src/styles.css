@@ -1,5 +1,5 @@
 :root {
-  --bg: #d3f2f2;
+  --bg: #f2f3f0;
   --panel: #ffffff;
   --muted: #6b7280;
   --text: #1f2937;
@@ -36,7 +36,7 @@ a {
 .app {
   min-height: 90%;
   height: 90%;
-  
+
   display: grid;
   grid-template-rows: auto 1fr;
 }
@@ -45,6 +45,7 @@ a {
   width: min(1100px, 94%);
   margin: 18px auto 40px;
 }
+
 /* 
 .header {
   display: grid;
@@ -74,7 +75,7 @@ a {
   height: 12px;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent2));
-  box-shadow: 0 0 14px #00e1ffaa;
+  box-shadow: 0 0 14px #779a9faa;
 }
 
 .brand-text {
@@ -134,19 +135,20 @@ a {
   padding: 10px 14px;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   border: none;
-  color: #00101a;
+  color: #141a00;
   font-weight: 700;
   border-radius: 12px;
   cursor: pointer;
 }
+
 .signin-btn {
- margin-bottom: 30px;
- margin-top: 20px;
-} 
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
 
 
 .btn:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.2);
 }
 
 .btn:disabled {
@@ -259,13 +261,9 @@ label {
 .login-page {
   display: flex;
   justify-content: center;
-  /* center horizontally */
   align-items: center;
-  /* center vertically */
   height: 100vh;
-  /* full viewport height */
   background: #f8f9de;
-  /* light background (optional) */
 }
 
 .login-card {
@@ -311,5 +309,27 @@ input:focus {
 }
 
 #manage-vacations {
-  margin-bottom: 50px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #0d3c8e;
+  font-style: italic;
+}
+
+.upload-btn {
+  margin: 10px;
+  background: linear-gradient(90deg, #10b981, #059669);
+  color: rgba(35, 135, 33, 0.531);
+}
+
+.upload-btn:hover {
+  filter: brightness(1.1);
+}
+
+.change-btn {
+  margin: 10px;
+  background: linear-gradient(90deg, #fccb77, #ffc078);
+}
+
+.change-btn:hover {
+  filter: brightness(1.1);
 }

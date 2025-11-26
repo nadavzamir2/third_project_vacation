@@ -51,32 +51,32 @@ export const VacationsPage = () => {
     const numberOfpages = Math.ceil(total / limit);
     return <div>
         <h1>{firstName}'s Vacations</h1>
-        <div>
+        <div style={{ marginTop: '50px' }}>
             <Stack
                 direction="row"
                 spacing={4}
                 sx={{
                     justifyContent: "center",
-                    alignItems: "center",
+                    alignItems: "top",
                     display: "flex",
                 }}
             >
-                <Box sx={{ flex: 1, mb: 3, border: '1px solid', borderColor: 'divider', p: 2, borderRadius: '8px', width: 'fit-content' }}>
+                <Box sx={{ height: "80%", justifyContent: "top", flex: 1, mb: 1, border: '1px solid', borderColor: 'divider', p: 3, borderRadius: '8px', width: 'fit-content' }}>
                     <Typography component="label" endDecorator={
-                        <Switch checked={onlyFollowed} onChange={onOnlyFollowedChange} sx={{ ml: 1, mb:5 }} />
+                        <Switch checked={onlyFollowed} onChange={onOnlyFollowedChange} sx={{ ml: 1, mb: 1 }} />
                     }>
                         Is followed By user
                     </Typography>
                     <Typography component="label" endDecorator={
-                    <RadioGroup
-                        value={filter}
-                        onChange={onFilterChange}
-                    >
-                        <Radio value={FilterDate.All} label="All" />
-                        <Radio value={FilterDate.Past} label="Past vacations" />
-                        <Radio value={FilterDate.Upcoming} label="Upcoming vacations" />
-                        <Radio value={FilterDate.Active} label="Active vacations" />
-                    </RadioGroup>
+                        <RadioGroup
+                            value={filter}
+                            onChange={onFilterChange}
+                        >
+                            <Radio value={FilterDate.All} label="All" />
+                            <Radio value={FilterDate.Past} label="Past vacations" />
+                            <Radio value={FilterDate.Upcoming} label="Upcoming vacations" />
+                            <Radio value={FilterDate.Active} label="Active vacations" />
+                        </RadioGroup>
                     }>
                         Filter by date
                     </Typography>
@@ -88,14 +88,17 @@ export const VacationsPage = () => {
                     {vacations.map(vacation => (
                         <VacationCard key={vacation.id} vacation={vacation} managedMode={false} invalidateData={invalidateData} />
                     ))}
-                     <Stack marginTop={6} spacing={2}>
-                        <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
-                            setCurrentPage(page - 1);
-                        }} />
-                    </Stack>
-                </Box>
 
+                </Box>
             </Stack>
+            
+
+            <Stack justifyContent={"center"} alignItems="center" marginTop={9} spacing={2}>
+                <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
+                    setCurrentPage(page - 1);
+                }} />
+            </Stack>
+            
         </div>
 
     </div>;
