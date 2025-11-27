@@ -2,7 +2,7 @@ import { uploadImage } from "@/services/uploadImage";
 import { useEffect, useRef, useState } from "react";
 import { Box, Button, Typography } from "@mui/joy";
 
-const placeholderSrc = `${import.meta.env.VITE_API_BASE_URL}/images/uploadImagePlaceholder.png`;
+const placeholderSrc = `${import.meta.env.VITE_API_BASE_URL}/images/placeholder.png`;
 
 type ImageInputProps = {
     imageFileName: string | null;
@@ -130,6 +130,20 @@ export const ImageInput = ({
 
                     }}
                 />
+                <Typography
+                    level="body-sm"
+                    sx={{
+                        position: 'absolute',
+                        bottom: 8,
+                        right: 8,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        color: 'white',
+                        padding: '2px 6px',
+                        borderRadius: '4px',
+                    }}
+                >
+                    {uploadedFileName ? "Current Image" : selectedImage ? selectedImage.name : "Click to select image"}
+                </Typography>
             </Box>
 
             <Box sx={{ display: 'flex', gap: 1 }}>
