@@ -32,13 +32,15 @@ const FollowButtons = ({ vacation, invalidateData }: { vacation: Vacation; inval
     if (vacation.isFollowedByUser) {
         return (
             <Button
+                size="small"
                 variant="contained"
                 color="error"
-                startIcon={<FavoriteIcon />}
+                startIcon={<FavoriteIcon fontSize="small" />}
                 onClick={async (e) => {
                     await unfollowVacation(vacation.id)
                     invalidateData();
                 }}
+                sx={{ fontSize: '0.75rem', padding: '4px 10px' }}
             >
                 Unfollow
             </Button>
@@ -46,13 +48,15 @@ const FollowButtons = ({ vacation, invalidateData }: { vacation: Vacation; inval
     } else {
         return (
             <Button
-                variant="outlined"
+                size="small"
+                variant="contained"
                 color="primary"
-                startIcon={<FavoriteBorderIcon />}
+                startIcon={<FavoriteBorderIcon fontSize="small" />}
                 onClick={async (e) => {
                     await followVacation(vacation.id)
                     invalidateData();
                 }}
+                sx={{ fontSize: '0.75rem', padding: '4px 10px' }}
             >
                 Follow
             </Button>

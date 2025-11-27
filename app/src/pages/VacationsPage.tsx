@@ -9,7 +9,10 @@ import { FilterDate } from "@/types";
 import { Switch, Typography } from "@mui/joy";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import Chip from '@mui/material/Chip';
 import { useUser } from "@/context/user.context";
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 export const VacationsPage = () => {
     const [vacations, setVacations] = useState<Array<Vacation>>([]);
@@ -54,32 +57,32 @@ export const VacationsPage = () => {
         <div style={{ marginTop: '50px' }}>
             <Stack
                 direction="row"
-                spacing={4}
+                spacing={7}
                 sx={{
                     justifyContent: "center",
                     alignItems: "top",
                     display: "flex",
                 }}
             >
-                <Box sx={{ height: "80%", justifyContent: "top", flex: 1, mb: 1, border: '1px solid', borderColor: 'divider', p: 3, borderRadius: '8px', width: 'fit-content' }}>
+                <Box sx={{ height: "80%", justifyContent: "top", flex: 1, mb: 1, border: '1px solid', borderColor: 'divider', p: 2, borderRadius: '18px', width: 'fit-content' }}>
+
                     <Typography component="label" endDecorator={
-                        <Switch checked={onlyFollowed} onChange={onOnlyFollowedChange} sx={{ ml: 1, mb: 1 }} />
+                        <Switch checked={onlyFollowed} onChange={onOnlyFollowedChange} sx={{ ml: 1 }} />
                     }>
-                        Is followed By user
+                        Followed By User
                     </Typography>
-                    <Typography component="label" endDecorator={
-                        <RadioGroup
-                            value={filter}
-                            onChange={onFilterChange}
-                        >
-                            <Radio value={FilterDate.All} label="All" />
-                            <Radio value={FilterDate.Past} label="Past vacations" />
-                            <Radio value={FilterDate.Upcoming} label="Upcoming vacations" />
-                            <Radio value={FilterDate.Active} label="Active vacations" />
-                        </RadioGroup>
-                    }>
-                        Filter by date
-                    </Typography>
+                    <Divider sx={{ my: 2 }} />
+                    <Chip label="Filter By Date:" variant="outlined" color="default" sx={{ mb: 1 }} icon={<FilterAltIcon />} />
+                    <RadioGroup
+                        value={filter}
+                        onChange={onFilterChange}
+                        sx={{ mt: 1 }}
+                    >
+                        <Radio value={FilterDate.All} label="All" />
+                        <Radio value={FilterDate.Past} label="Past vacations" />
+                        <Radio value={FilterDate.Upcoming} label="Upcoming vacations" />
+                        <Radio value={FilterDate.Active} label="Active vacations" />
+                    </RadioGroup>
 
                 </Box>
                 <Box
@@ -91,14 +94,14 @@ export const VacationsPage = () => {
 
                 </Box>
             </Stack>
-            
+
 
             <Stack justifyContent={"center"} alignItems="center" marginTop={9} spacing={2}>
                 <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
                     setCurrentPage(page - 1);
                 }} />
             </Stack>
-            
+
         </div>
 
     </div>;
