@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-export const useEndDateField = (initialValue: string) => {
-    const [endDate, setEndDate] = useState(initialValue);
+export const useEndDateField = (initialValue: string, startDateStr: string) => {
+    const [endDateStr, setEndDate] = useState(initialValue);
     const [endDateError, setEndDateError] = useState<string | null>(null);
     const [isDirty, setIsDirty] = useState(false);  
 
@@ -10,21 +10,24 @@ export const useEndDateField = (initialValue: string) => {
             setEndDateError(null); 
             return;
         }
-        const date = new Date(endDate);
+        const endDate = new Date(endDateStr);
+        const startDate = new Date(startDateStr);
         const now = new Date();
-        if (isNaN(date.getTime())) {
+        if (isNaN(endDate.getTime())) {
             setEndDateError("End date is invalid");
-        } else if (date < now) {
+        } else if (endDate < now) {
             setEndDateError("End date cannot be in the past");
+        } else if (endDate <= startDate) {
+            setEndDateError("End date must be after start date");
         } else {
             setEndDateError(null);
         }
-    }, [endDate]);
+    }, [endDateStr, startDateStr]);
 
     const onEndDateChange = (newValue: string) => {
         setIsDirty(true);
         setEndDate(newValue);
     }
 
-    return { endDate, onEndDateChange, endDateError };
+    return { endDate: endDateStr, onEndDateChange, endDateError };
 }   

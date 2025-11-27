@@ -22,7 +22,7 @@ export const VacationsPage = () => {
     const [invalidationCounter, setInvalidationCounter] = useState(0);
     const [total, setTotal] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
-    const limit = 2;
+    const limit = 10;
 
     const resetPagination = () => {
         setCurrentPage(0);
@@ -54,7 +54,13 @@ export const VacationsPage = () => {
     const numberOfpages = Math.ceil(total / limit);
     return <div>
         <h1>{firstName}'s Vacations</h1>
-        <div style={{ marginTop: '50px' }}>
+        <Stack justifyContent={"center"} alignItems="center" marginTop={4} spacing={2}>
+            <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
+                setCurrentPage(page - 1);
+            }} />
+        </Stack>
+
+        <div style={{ marginTop: '30px' }}>
             <Stack
                 direction="row"
                 spacing={7}
@@ -66,10 +72,10 @@ export const VacationsPage = () => {
             >
                 <Box sx={{ height: "80%", justifyContent: "top", flex: 1, mb: 1, border: '1px solid', borderColor: 'divider', p: 2, borderRadius: '18px', width: 'fit-content' }}>
 
-                    <Typography component="label" endDecorator={
+                    <Typography component="label" startDecorator={
                         <Switch checked={onlyFollowed} onChange={onOnlyFollowedChange} sx={{ ml: 1 }} />
                     }>
-                        Followed By User
+                        Only My Following
                     </Typography>
                     <Divider sx={{ my: 2 }} />
                     <Chip label="Filter By Date:" variant="outlined" color="default" sx={{ mb: 1 }} icon={<FilterAltIcon />} />
@@ -86,7 +92,7 @@ export const VacationsPage = () => {
 
                 </Box>
                 <Box
-                    sx={{ flex: 4, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 1, mb: 1 }}
+                    sx={{ flex: 4, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 3 }}
                 >
                     {vacations.map(vacation => (
                         <VacationCard key={vacation.id} vacation={vacation} managedMode={false} invalidateData={invalidateData} />
