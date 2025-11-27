@@ -1,4 +1,4 @@
-import { FilterDate, Vacation } from "@/types";
+import { Vacation } from "@/types";
 import api from "./api";
 
 

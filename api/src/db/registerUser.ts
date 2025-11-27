@@ -1,8 +1,8 @@
-import {getConnection} from "./";
+import { getConnection } from ".";
 import { User } from "../types";
 
 
-export const registerUser = async (user: Omit<User, "id" | "role"> & {password: string}) => {
+export const registerUser = async (user: Omit<User, "id" | "role"> & { password: string }) => {
     const connection = await getConnection();
     const result = connection?.execute(registerUserQuery(), [
         user.firstName,
@@ -10,7 +10,7 @@ export const registerUser = async (user: Omit<User, "id" | "role"> & {password: 
         user.email,
         user.password,
     ]);
-     return result;
+    return result;
 }
 
 const registerUserQuery = () => {

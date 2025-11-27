@@ -5,13 +5,6 @@ import { Bar, BarChart, XAxis, YAxis } from 'recharts';
 export const MetricsPage = () => {
     const [data, setData] = useState<{name: string; followers: number}[]>([]);
 
-    const margin = {
-        top: 80,
-        right: 30,
-        left: 0,
-        bottom: 25,
-    };
-
     useEffect(() => {
         getMetrics().then((result => {
             const mappedResult = result.map((item) => {

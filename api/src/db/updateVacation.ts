@@ -1,5 +1,5 @@
 import { Vacation } from "../types";
-import { getConnection } from "./";
+import { getConnection } from ".";
 
 export const updateVacation = async (vacation: Vacation): Promise<boolean> => {
     const connection = await getConnection();

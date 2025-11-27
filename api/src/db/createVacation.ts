@@ -1,5 +1,5 @@
 import { Vacation } from "../types";
-import { getConnection } from "./";
+import { getConnection } from ".";
 
 export const createVacation = async (vacation: Omit<Vacation, "id">): Promise<Vacation> => {
     const connection = await getConnection();

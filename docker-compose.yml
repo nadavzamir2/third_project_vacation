@@ -12,21 +12,21 @@ services:
     volumes:
       - ./db/init/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  api-client:
-    build: ./app
+  client-container:
+    build: ./client
     container_name: client
     restart: always
     ports:
       - "3001:3001"
 
-  api:
-    build: ./api_1
+  api-container:
+    build: ./api
     container_name: server
     restart: always
     volumes:
       - ./logs:/app/logs
-      - ./api_1/src:/app/src # Mount source for hot-reload
-      - ./api_1/dist:/app/dist # Mount dist for compiled output
+      - ./api/src:/app/src
+      - ./api/dist:/app/dist
     ports:
       - "3000:3000"
     environment:

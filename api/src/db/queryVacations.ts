@@ -1,5 +1,5 @@
 import { string } from "zod";
-import { getConnection } from "./";
+import { getConnection } from ".";
 import { FilterDate } from "../types";
 
 

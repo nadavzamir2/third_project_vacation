@@ -1,25 +1,10 @@
-# Create Docker compose for all the environment
-1. dockerize nodejs api application
-2. DB - add mysql service
-3. make sure the api is connecting to the DB
-4. connect the client as well using static files api
- 
+# Vacation App
 
+## App DB
+- Change init.sql file for initial DB values
 
-<!-- Docker compose -->
- <!-- Vacations-Api
- Vacations-Client - NOT IN DEV MODE - npm run dev!!!! 
- npm run build
- Serve - Static Content inside Nodejs.api
- MySQL DB -->
- <!--  -->
- <!-- docker compose up -->
+## Client
+Serves the React app 
 
-
- <!-- Docker compose -->
- <!-- Vacations-Api
-/api/...
-/index.html > static content
- MySQL DB -->
- <!--  -->
- <!-- docker compose up -->
+## API
+Servers all the endpoints & Images storage

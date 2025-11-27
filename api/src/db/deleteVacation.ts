@@ -1,4 +1,4 @@
-import { getConnection } from "./";
+import { getConnection } from ".";
 
 export const deleteVacation = async (vacationId: number): Promise<boolean> => {
     const connection = await getConnection();
