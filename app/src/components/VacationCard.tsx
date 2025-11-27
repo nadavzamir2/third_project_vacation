@@ -27,7 +27,6 @@ import { DeleteModal } from "@/components/DeleteModal"
 import CardHeader from "@mui/material/CardHeader";
 
 
-
 const FollowButtons = ({ vacation, invalidateData }: { vacation: Vacation; invalidateData: () => void }) => {
     if (vacation.isFollowedByUser) {
         return (
