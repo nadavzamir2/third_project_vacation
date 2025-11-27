@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { isFollow } from "../db/isFollow";
 import { removeFollower } from "../db/removeFollower";
 
-export const unFollowEndpoint = async (req: Request, res: Response) => {
+export const postUnFollowEndpoint = async (req: Request, res: Response) => {
     try {
         const body = req.body;
-       const email = (req as any).user.email;
+        const email = (req as any).user.email;
         const vacationId = body.vacationId;
         if (!vacationId) {
             return res.status(400).send("vacationId is required");

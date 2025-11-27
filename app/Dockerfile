@@ -21,7 +21,5 @@ COPY package*.json .
 COPY index.js .
 RUN npm install --only=production
 
-# node modules + code + package.json + lock file
-
 CMD ["node" , "index.js"]
 

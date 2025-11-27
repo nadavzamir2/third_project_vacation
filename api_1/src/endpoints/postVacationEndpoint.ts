@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { isFloat, getNumOfDecimals } from "./../utils/numbers";
+import { isFloat, getNumOfDecimals } from "../utils/numbers";
 import { isDateDDMMYYYY, convertDDMMYYYYtoYYYYMMDD } from "../utils/dates";
 import { createVacation } from "../db/createVacation";
 

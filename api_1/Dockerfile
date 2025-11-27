@@ -9,11 +9,9 @@ COPY entrypoint.sh .
 RUN chmod +x wait-for-it.sh
 RUN chmod +x entrypoint.sh
 
-# Install all dependencies (including devDependencies for development)
 RUN npm install
 
 COPY ./src /app/src
 
-# Default command (can be overridden in docker-compose)
 CMD ["npm", "run", "start"]
 

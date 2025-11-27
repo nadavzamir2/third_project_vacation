@@ -2,9 +2,8 @@ import { Request, Response } from "express";
 import { hasOnlyEnglishLetters, noForeignLetters } from "../utils/latinLetters";
 import { registerUser } from "../db/registerUser";
 import { getConnection } from "../db";
-import { email } from "zod";
 
-export const registerEndpoint = async (req: Request, res: Response) => {
+export const postRegisterEndpoint = async (req: Request, res: Response) => {
     const body = req.body;
     const firstName = body.firstName;
     const lastName = body.lastName;
