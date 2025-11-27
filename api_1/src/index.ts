@@ -16,6 +16,7 @@ import { onlyAdmin, onlyUser } from "./auth/verifyRoles";
 import cors from "cors";
 import path from "path";
 import { uploadImageEndpoint } from "./endpoints/uploadImageEndpoint";
+import multer from "multer";
 
 
 dotenv.config();
@@ -28,7 +29,12 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use("/images", express.static(imagesPath));
 
-
+const storage = multer.diskStorage(
+    {
+        destination: path.join(__dirname, "uploads", "images"),
+        filename: (req, file, cb) => { cb(null, Date.now() + "-" + file.originalname); }
+    });
+const fileUploader = multer({ storage });
 app.get("/hello", (req, res, next) => {
     res.send("Hello World!");
 });
@@ -42,7 +48,7 @@ app.post("/vacations", verifyToken, postQueryVacationsEndpoint);
 app.post("/register", registerEndpoint);
 app.post("/login", postLoginEndpoint);
 app.get("/metrics", verifyToken, onlyAdmin, getMetricsEndpoint);
-app.post("/upload-image", verifyToken, onlyAdmin, uploadImageEndpoint);
+app.post("/upload-image", verifyToken, onlyAdmin, fileUploader.single('image'), uploadImageEndpoint);
 
 app.listen(PORT, (err) => {
     if (err) {

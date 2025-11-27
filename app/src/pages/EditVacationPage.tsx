@@ -21,7 +21,7 @@ export const EditVacationPage = () => {
     const { startDate, onStartDateChange, startDateError } = useStartDateField("");
     const { endDate, onEndDateChange, endDateError } = useEndDateField("");
     const { price, onPriceChange, priceError } = usePriceField(0);
-    const { image, onImageChange, imageError, setImageError } = useImageField("");
+    const { image, onImageChange, imageError, setImageError } = useImageField(null);
     const isDisabled = destinationError || descriptionError || startDateError || endDateError || priceError || imageError ? true : false;
 
     const navigate = useNavigate();

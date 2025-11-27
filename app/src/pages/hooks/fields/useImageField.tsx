@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useImageField = (initialValue: string) => {
+export const useImageField = (initialValue: string | null) => {
     const [image, setImage] = useState<string | null>(initialValue);
     const [imageError, setImageError] = useState<string | null>(null);
     const [isDirty, setIsDirty] = useState(false);

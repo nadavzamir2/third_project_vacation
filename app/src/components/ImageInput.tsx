@@ -133,8 +133,9 @@ export const ImageInput = ({
             </Box>
 
             <Box sx={{ display: 'flex', gap: 1 }}>
-                {uploadedFileName === null ? (
+                {!uploadedFileName ? (
                     <Button
+                    className="btn upload-btn"
                         disabled={isDisabled}
                         onClick={onUploadClick}
                         startDecorator="📤"
@@ -144,7 +145,7 @@ export const ImageInput = ({
                         Upload
                     </Button>
                 ) : (
-                    <Button className="btn change-btn "
+                    <Button className="btn change-btn"
                         onClick={onChangeFileClick}
                         startDecorator="🔄"
                         variant="outlined"
