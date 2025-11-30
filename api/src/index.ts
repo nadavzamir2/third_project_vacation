@@ -15,6 +15,7 @@ import { postRegisterEndpoint } from "./endpoints/postRegisterEndpoint";
 import { postLoginEndpoint } from "./endpoints/postLoginEndpoint";
 import { getMetricsEndpoint as getMetricsEndpoint } from "./endpoints/getMetricsEndpoint";
 import { postUploadImageEndpoint } from "./endpoints/postUploadImageEndpoint";
+import { getExportCsvEndpoint } from "./endpoints/getExportCsvEndpoint";
 import { verifyToken } from "./auth/verifyToken";
 import { onlyAdmin, onlyUser } from "./auth/verifyRoles";
 import { createFileUploader } from "./utils/storage";
@@ -41,6 +42,7 @@ app.post("/vacations", verifyToken, postQueryVacationsEndpoint);
 app.post("/register", postRegisterEndpoint);
 app.post("/login", postLoginEndpoint);
 app.get("/metrics", verifyToken, onlyAdmin, getMetricsEndpoint);
+app.get("/vacations/export", verifyToken, onlyAdmin, getExportCsvEndpoint);
 app.post("/upload-image", verifyToken, onlyAdmin, fileUploader.single('image'), postUploadImageEndpoint);
 
 app.listen(PORT, (err) => {

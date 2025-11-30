@@ -102,7 +102,7 @@ export const VacationsPage = () => {
             </Stack>
 
 
-            <Stack justifyContent={"center"} alignItems="center" marginTop={9} spacing={2}>
+            <Stack justifyContent={"center"} alignItems="center" marginTop={5} marginBottom={4} spacing={2}>
                 <Pagination color="primary" count={numberOfpages} page={currentPage + 1} onChange={(e, page) => {
                     setCurrentPage(page - 1);
                 }} />
