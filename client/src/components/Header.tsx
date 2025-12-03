@@ -113,7 +113,10 @@ export default function Header() {
                     my: 2,
                     color: 'white',
                     display: 'block',
-                    backgroundColor: isActive(page === 'Login' ? '/login' : '/register') ? 'rgba(255, 255, 255, 0.1)' : 'transparent'
+                    backgroundColor: isActive(page === 'Login' ? '/login' : '/register') ? 'rgba(237, 218, 218, 0.2)' : 'transparent',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.15)'
+                    }
                   }}
                 >
                   {page}
@@ -132,7 +135,10 @@ export default function Header() {
                       page === 'Manage' ? '/manage' :
                         page === 'Add' ? '/create' :
                           '/metrics'
-                    ) ? 'rgba(255, 255, 255, 0.1)' : 'transparent'
+                    ) ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.15)'
+                    }
                   }}
                 >
                   {page}
@@ -161,6 +167,11 @@ export default function Header() {
                   color="inherit"
                   onClick={onLogout}
                   startIcon={<LogoutIcon />}
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.15)'
+                    }
+                  }}
                 >
                   Logout
                 </Button>

@@ -101,7 +101,7 @@ export const VacationsPage = () => {
                             py: 8
                         }}>
                             <Typography level="h3" color="neutral">
-                                No vacations found
+                                No Vacations Found
                             </Typography>
                             <Typography level="body-md" color="neutral" sx={{ mt: 1 }}>
                                 Try adjusting your filters
