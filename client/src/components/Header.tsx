@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Chip from '@mui/material/Chip';
 import { MobileMenu } from "./MobileMenu";
 
 const pages = ['Manage', 'Add', 'Metrics'];
@@ -142,6 +143,17 @@ export default function Header() {
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 3 }}>
             {authed ? (
               <>
+                {role === Role.Admin && (
+                  <Chip
+                    label="ADMIN"
+                    size="small"
+                    sx={{
+                      fontWeight: 'bold',
+                      backgroundColor: '#e4cc43ff',
+                      color: '#2c1f1fff'
+                    }}
+                  />
+                )}
                 <Typography variant="body1" sx={{ display: { xs: 'none', sm: 'block' } }}>
                   Hello {firstName}!
                 </Typography>

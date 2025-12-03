@@ -94,10 +94,24 @@ export const VacationsPage = () => {
                 <Box
                     sx={{ flex: 4, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 3 }}
                 >
-                    {vacations.map(vacation => (
-                        <VacationCard key={vacation.id} vacation={vacation} managedMode={false} invalidateData={invalidateData} />
-                    ))}
-
+                    {vacations.length === 0 ? (
+                        <Box sx={{
+                            gridColumn: '1 / -1',
+                            textAlign: 'center',
+                            py: 8
+                        }}>
+                            <Typography level="h3" color="neutral">
+                                No vacations found
+                            </Typography>
+                            <Typography level="body-md" color="neutral" sx={{ mt: 1 }}>
+                                Try adjusting your filters
+                            </Typography>
+                        </Box>
+                    ) : (
+                        vacations.map(vacation => (
+                            <VacationCard key={vacation.id} vacation={vacation} managedMode={false} invalidateData={invalidateData} />
+                        ))
+                    )}
                 </Box>
             </Stack>
 

@@ -7,6 +7,7 @@ import { useEndDateField } from "./hooks/fields/useEndDateField";
 import { usePriceField } from "./hooks/fields/usePriceField";
 import { useImageField } from "./hooks/fields/useImageField";
 import { ImageInput } from "@/components/ImageInput";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 
 
@@ -20,11 +21,11 @@ export const AddVacationPage = () => {
 
   const navigate = useNavigate();
   const correctFormatDate = (date: string) => {
-  const [year, month, day] = date.split("-");
-  return `${day}-${month}-${year}`;
-}
+    const [year, month, day] = date.split("-");
+    return `${day}-${month}-${year}`;
+  }
 
-  
+
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,22 +56,34 @@ export const AddVacationPage = () => {
         </label>
         {destinationError && (<div className="error">{destinationError}</div>)}
         <label>Description
-          <input type="text" value={description} onChange={(e) => {onDescriptionChange(e.target.value) }}></input>
+          <input type="text" value={description} onChange={(e) => { onDescriptionChange(e.target.value) }}></input>
         </label>
         {descriptionError && (<div className="error">{descriptionError}</div>)}
         <label>Start Date
-          <input type="date" value={startDate} onChange={(e) => { onStartDateChange(e.target.value) }}></input>
+          <div style={{ position: 'relative', display: 'block', width: '100%' }}>
+            <CalendarMonthIcon
+              onClick={(e) => { const input = e.currentTarget.nextElementSibling as HTMLInputElement; input?.showPicker?.(); }}
+              style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: '#666', pointerEvents: 'auto', zIndex: 1, marginTop: '-5px' }}
+            />
+            <input type="date" value={startDate} onChange={(e) => { onStartDateChange(e.target.value) }} style={{ paddingLeft: '40px', width: '100%' }}></input>
+          </div>
         </label>
         {startDateError && (<div className="error">{startDateError}</div>)}
         <label>End Date
-          <input type="date" value={endDate} onChange={(e) => { onEndDateChange(e.target.value) }}></input>
+          <div style={{ position: 'relative', display: 'block', width: '100%' }}>
+            <CalendarMonthIcon
+              onClick={(e) => { const input = e.currentTarget.nextElementSibling as HTMLInputElement; input?.showPicker?.(); }}
+              style={{ position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: '#666', pointerEvents: 'auto', zIndex: 1, marginTop: '-5px' }}
+            />
+            <input type="date" value={endDate} onChange={(e) => { onEndDateChange(e.target.value) }} style={{ paddingLeft: '40px', width: '100%' }}></input>
+          </div>
         </label>
         {endDateError && (<div className="error">{endDateError}</div>)}
         <label>Price
           <input type="number" value={price} onChange={(e) => { onPriceChange(Number(e.target.value)) }}></input>
         </label>
         {priceError && (<div className="error">{priceError}</div>)}
-        <ImageInput imageFileName={image} imageError={imageError} setImageError={setImageError} setImageFileName={onImageChange}/>
+        <ImageInput imageFileName={image} imageError={imageError} setImageError={setImageError} setImageFileName={onImageChange} />
         <button className="btn signin-btn" type="submit">Add Vacation</button>
       </form>
     </div>

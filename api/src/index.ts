@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import logger from "./logger";
 import cors from "cors";
 import path from "path";
-import multer from "multer";
 import { postVacationEndpoint } from "./endpoints/postVacationEndpoint";
 import { getVacationEndpoint } from "./endpoints/getVacationEndpoint";
 import { deleteVacationEndpoint } from "./endpoints/deleteVacationEndpoint";
@@ -54,4 +53,15 @@ app.listen(PORT, (err) => {
         logger.info(`Api is running on port ${PORT}!!!`);
         console.log(`Api is running on port ${PORT}`);
     }
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    logger.error(`Unhandled Rejection: ${reason}`);
+});
+
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    logger.error(`Uncaught Exception: ${error.message}`);
+    process.exit(1);
 });

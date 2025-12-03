@@ -295,10 +295,11 @@ input {
   padding: 10px 12px;
   border-radius: 10px;
   outline: none;
+  margin: 0px 0 10px 0;
 }
 
 input:focus {
-  border-color: #1f7ea3;
+  border-color: #0f94c8;
   box-shadow: var(--ring);
 }
 
